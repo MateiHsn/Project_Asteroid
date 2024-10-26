@@ -4,16 +4,16 @@
 Aplicația va prezenta printr-o interfață grafică relativ simplă o metodă de a manageria flota de mașini și cererile de închiriere ale clienților.
 ## Milestone #0
 
-- [ ] Nume proiect (poate fi schimbat ulterior)
-- [ ] Scurtă descriere a temei alese, ce v-ați propus să implementați
+- [️✅] Nume proiect (poate fi schimbat ulterior)
+- [️✅] Scurtă descriere a temei alese, ce v-ați propus să implementați
 
 ## Milestone #1
 
 #### Cerințe
-- [ ] definirea a minim **3-4 clase** folosind compunere cu clasele definite de voi
-- [ ] constructori de inițializare cu parametri
-- [ ] pentru o aceeași (singură) clasă: constructor de copiere, `operator=` de copiere, destructor
-- [ ] `operator<<` pentru toate clasele pentru afișare (std::ostream)
+- [️✅] definirea a minim **3-4 clase** folosind compunere cu clasele definite de voi
+- [️✅] constructori de inițializare cu parametri
+- [️✅] pentru o aceeași (singură) clasă: constructor de copiere, `operator=` de copiere, destructor
+- [️✅] `operator<<` pentru toate clasele pentru afișare (std::ostream)
 - [ ] cât mai multe `const` (unde este cazul)
 - [ ] implementarea a minim 3 funcții membru publice pentru funcționalități specifice temei alese, dintre care cel puțin 1-2 funcții mai complexe
   - nu doar citiri/afișări sau adăugat/șters elemente într-un/dintr-un vector
