@@ -1,4 +1,4 @@
-# Titlu proiect
+# Chicken Invaders
 
 ## Descriere proiect
 Acest repo va conține codul necesar pt proiectul laboratorului de OOP, mai exact pentru jocul Chicken Invaders dar într-o variantă mai simplificată. 
