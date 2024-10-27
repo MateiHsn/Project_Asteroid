@@ -16,26 +16,25 @@ include(cmake/Options.cmake)
 
 # external dependencies with FetchContent
 #########################################
-#include(FetchContent)
-#set(BUILD_SHARED_LIBS OFF)
-#FETCHCONTENT_DECLARE(SFML GIT_REPOSITORY https://github.com/SFML/SFML.git GIT_TAG 2.6.1)
-#FETCHCONTENT_MAKEAVAILABLE(SFML)
-#TARGET_LINK_LIBRARIES(sfml-graphics)
+include(FetchContent)
 #
-# set(FETCHCONTENT_QUIET OFF)
-# set(FETCHCONTENT_UPDATES_DISCONNECTED ON)
+ set(FETCHCONTENT_QUIET OFF)
+ set(FETCHCONTENT_UPDATES_DISCONNECTED ON)
 #
 # NOTE: Also update env vars used for caching in
 #         - .github/actions/configure-cmake/action.yml
 #         - .github/workflows/cmake.yml
-# FetchContent_Declare(
-#         SomeLib
-#         GIT_REPOSITORY https://github.com/<SomeUser>/<SomeLib>.git
+FetchContent_Declare(
+        raylib
+        GIT_REPOSITORY https://github.com/raysan5/raylib.git
+        GIT_TAG "master"
+        GIT_PROGRESS TRUE
+)
 #         GIT_TAG        <some_git_hash> # <which tag/branch @ <some_date>>
 #         GIT_SHALLOW    1  # works only with branches or tags, not with arbitrary commit hashes
 # )
 #
-# FetchContent_MakeAvailable(SomeLib)
+FetchContent_MakeAvailable(raylib)
 
 ###############################################################################
 
@@ -60,7 +59,7 @@ target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE generated/include)
 # target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ext/<SomeHppLib>/include)
 # target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ${<SomeLib>_SOURCE_DIR}/include)
 # target_link_directories(${PROJECT_NAME} PRIVATE ${<SomeLib>_BINARY_DIR}/lib)
-# target_link_libraries(${PROJECT_NAME} <SomeLib>)
+ target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
 
 ###############################################################################
 

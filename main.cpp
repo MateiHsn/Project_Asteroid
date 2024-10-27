@@ -1,8 +1,8 @@
 #include <iostream>
+#include <raylib.h>
 
 class Player{
 private:
-  short HealthPoints;
   std::string PlayerName;
   short PlayerLevel;
   unsigned short PlayerLives;
@@ -10,8 +10,7 @@ public:
 
   Player()=default;
 
-  Player(short HealthPoints,const std::string& PlayerName,short PlayerLevel,unsigned short PlayerLives){
-    this->HealthPoints=HealthPoints;
+  Player(const std::string& PlayerName,short PlayerLevel,unsigned short PlayerLives,short HealthPoints){
     this->PlayerLevel=PlayerLevel;
     this->PlayerName=PlayerName;
     this->PlayerLives=PlayerLives;
@@ -20,21 +19,19 @@ public:
   Player& operator=(const Player& player){
     this->PlayerName=player.PlayerName;
     this->PlayerLevel=player.PlayerLevel;
-    this->HealthPoints=player.HealthPoints;
 
     return *this;
   }
 
   Player(const Player& obj){
-    this->HealthPoints=obj.HealthPoints;
     this->PlayerLevel=obj.PlayerLevel;
     this->PlayerName=obj.PlayerName;
+    this->PlayerLives=obj.PlayerLives;
   }
 
   friend std::ostream & operator<<(std::ostream &out,const Player& player){
     out<<"Player name: "<<player.PlayerName<<'\n';
     out<<"Player level: "<<player.PlayerLevel<<'\n';
-    out<<"Player HP: "<<player.HealthPoints<<'\n';
     out<<"Player Lives "<<player.PlayerLives<<'\n';
 
     return out;
@@ -126,20 +123,37 @@ class Menu{
 };
 
 int main(){
-  Player p1(100,"Gigel",1,5);
-
+  Player p1("Gigel",1,5,100);
   std::cout<<p1;
 
   Player p2=p1;
   std::cout<<p2;
 
-  Enemy e1("Dorel",10,1,5);
+  Enemy e1("Dorel",2,1,10);
   std::cout<<e1;
 
-  Enemy e2=e1;
+  Projectile pr1("Racheta",100,10);
 
-  Projectile pr1("Racheta",2,3);
-  std::cout<<pr1;
+  const int ScreenWidth = 1920;
+  const int ScreenHeight = 1200;
+
+  InitWindow(ScreenWidth,ScreenHeight,"Chicken Invaders");
+
+  Vector2 PlayerPosition = {-100.0f,-100.0f};
+  Color PlayerColor=RED;
+
+  SetTargetFPS(60);
+  while(!WindowShouldClose()){
+      PlayerPosition=GetMousePosition();
+
+      ClearBackground(RAYWHITE);
+      DrawPoly(PlayerPosition,3,100.,30.,PlayerColor);
+
+      EndDrawing();
+  }
+
+  CloseWindow();
+
 
   return 0;
 }
