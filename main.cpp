@@ -42,13 +42,9 @@ public:
     }
 
     void Update();
+    void Draw();
 
 };
-
-void Projectile::Update() {
-
-}
-
 
 class Player {
 private:
@@ -139,9 +135,6 @@ void Player::Update() {
 
     if (IsKeyPressed(KEY_ENTER)) {
         std::cout << "Trage\n";
-
-        Projectile pr(1, 1, 10);
-
 
 
     }
@@ -238,7 +231,7 @@ int main() {
     Menu meniu;
 
 
-    Player p1("Gigel", 1, 5, { ScreenWidth / 2.f,ScreenHeight / 2.f }, 30.);
+    Player p1(std::string("Gigel"), 1, 5, { ScreenWidth / 2.f,ScreenHeight / 2.f }, 30.);
     std::cout << p1;
 
     meniu.RunApp(p1);
@@ -246,7 +239,7 @@ int main() {
     Player p2 = p1;
     std::cout << p2;
 
-    Enemy e1("Dorel", 2, 1, 10);
+    Enemy e1(std::string("Dorel"), 2, 1, 10);
     std::cout << e1;
 
     Projectile pr1(1, 100, 10);
