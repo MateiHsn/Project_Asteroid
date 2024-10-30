@@ -1,161 +1,256 @@
 #include <iostream>
 #include <raylib.h>
+#include <rlgl.h>
+#include <raymath.h>
 
-class Player{
+constexpr int ScreenWidth = 1280;
+constexpr int ScreenHeight = 720;
+constexpr float DefaultRotation = 30.;
+
+class Projectile {
 private:
-  std::string PlayerName;
-  short PlayerLevel;
-  unsigned short PlayerLives;
-public:
-
-  Player()=default;
-
-  Player(const std::string& PlayerName,short PlayerLevel,unsigned short PlayerLives,short HealthPoints){
-    this->PlayerLevel=PlayerLevel;
-    this->PlayerName=PlayerName;
-    this->PlayerLives=PlayerLives;
-  }
-
-  Player& operator=(const Player& player){
-    this->PlayerName=player.PlayerName;
-    this->PlayerLevel=player.PlayerLevel;
-
-    return *this;
-  }
-
-  Player(const Player& obj){
-    this->PlayerLevel=obj.PlayerLevel;
-    this->PlayerName=obj.PlayerName;
-    this->PlayerLives=obj.PlayerLives;
-  }
-
-  friend std::ostream & operator<<(std::ostream &out,const Player& player){
-    out<<"Player name: "<<player.PlayerName<<'\n';
-    out<<"Player level: "<<player.PlayerLevel<<'\n';
-    out<<"Player Lives "<<player.PlayerLives<<'\n';
-
-    return out;
-  }
-
-  ~Player(){
-    std::cout<<"Jucatorul "<<this->PlayerName<<" a fost distrus\n";
-  }
-
-};
-
-class Enemy{
-private:
-  short HealthPoints;
-  std::string EnemyName;
-  short EnemyLevel;
-  unsigned short EnemySpeed;
+    unsigned int ProjectileType;
+    unsigned int ProjectileSpeed;
+    unsigned int ProjectileDamage;
 
 public:
 
-  Enemy()=default;
+    Projectile() = default;
 
-  Enemy(const std::string& EnemyName,short HealthPoints,short EnemyLevel,unsigned short EnemySpeed){
-    this->EnemyName=EnemyName;
-    this->EnemyLevel=EnemyLevel;
-    this->HealthPoints=HealthPoints;
-    this->EnemySpeed=EnemySpeed;
-  }
+    Projectile(unsigned int ProjectileType, unsigned int ProjectileSpeed, unsigned int ProjectileDamage) {
+        this->ProjectileType = ProjectileType;
+        this->ProjectileSpeed = ProjectileSpeed;
+        this->ProjectileDamage = ProjectileDamage;
+    }
 
-  Enemy(const Enemy& obj){
-    this->EnemyName=obj.EnemyName;
-    this->EnemyLevel=obj.EnemyLevel;
-    this->HealthPoints=obj.HealthPoints;
-    this->EnemySpeed=obj.EnemySpeed;
-  }
+    Projectile(const Projectile& projectile) {
+        this->ProjectileType = projectile.ProjectileType;
+        this->ProjectileSpeed = projectile.ProjectileSpeed;
+        this->ProjectileDamage = projectile.ProjectileDamage;
+    }
 
-  ~Enemy(){
-    std::cout<<"Inamicul "<<this->EnemyName<<" a fost distrus\n";
-  }
+    friend std::ostream& operator <<(std::ostream& out, const Projectile& projectile) {
+        out << "Projectile type: " << projectile.ProjectileType << '\n';
+        out << "Projectile damage: " << projectile.ProjectileDamage << '\n';
+        out << "Projectile speed: " << projectile.ProjectileSpeed << '\n';
 
-  friend std::ostream& operator<<(std::ostream& out,const Enemy& enemy){
-    out<<"Enemy name: "<<enemy.EnemyName<<'\n';
-    out<<"Enemy level: "<<enemy.EnemyLevel<<'\n';
-    out<<"Enemy HP: "<<enemy.HealthPoints<<'\n';
-    out<<"Enemy speed: "<<enemy.EnemySpeed<<'\n';
+        return out;
+    }
 
-    return out;
-  }
+    ~Projectile() {
+        std::cout << "Proiectilul de tip " << this->ProjectileType << " a ratat sau a nimerit\n";
+    }
 
-};
-
-class Projectile{
-private:
-  std::string ProjectileType;
-  unsigned int ProjectileSpeed;
-  unsigned int ProjectileDamage;
-public:
-
-  Projectile()=default;
-
-  Projectile(const std::string& ProjectileType, unsigned int ProjectileSpeed, unsigned int ProjectileDamage){
-    this->ProjectileType=ProjectileType;
-    this->ProjectileSpeed=ProjectileSpeed;
-    this->ProjectileDamage=ProjectileDamage;
-  }
-
-  Projectile(const Projectile& projectile){
-    this->ProjectileType=projectile.ProjectileType;
-    this->ProjectileSpeed=projectile.ProjectileSpeed;
-    this->ProjectileDamage=projectile.ProjectileDamage;
-  }
-
-  friend std::ostream& operator <<(std::ostream& out, const Projectile& projectile){
-    out<<"Projectile type: "<<projectile.ProjectileType<<'\n';
-    out<<"Projectile damage: "<<projectile.ProjectileDamage<<'\n';
-    out<<"Projectile speed: "<<projectile.ProjectileSpeed<<'\n';
-
-    return out;
-  }
-
-  ~Projectile(){
-    std::cout<<"Proiectilul de tip "<<this->ProjectileType<<" a ratat sau a nimerit\n";
-  }
+    void Update();
 
 };
 
-class Menu{
+void Projectile::Update() {
 
-};
-
-int main(){
-  Player p1("Gigel",1,5,100);
-  std::cout<<p1;
-
-  Player p2=p1;
-  std::cout<<p2;
-
-  Enemy e1("Dorel",2,1,10);
-  std::cout<<e1;
-
-  Projectile pr1("Racheta",100,10);
-
-  const int ScreenWidth = 1920;
-  const int ScreenHeight = 1200;
-
-  InitWindow(ScreenWidth,ScreenHeight,"Chicken Invaders");
-
-  Vector2 PlayerPosition = {-100.0f,-100.0f};
-  Color PlayerColor=RED;
-
-  SetTargetFPS(60);
-  while(!WindowShouldClose()){
-      PlayerPosition=GetMousePosition();
-
-      ClearBackground(RAYWHITE);
-      DrawPoly(PlayerPosition,3,100.,30.,PlayerColor);
-
-      EndDrawing();
-  }
-
-  CloseWindow();
-
-
-  return 0;
 }
 
 
+class Player {
+private:
+    std::string PlayerName;
+    short PlayerLevel;
+    unsigned short PlayerLives;
+    float Rotation;
+    Vector2 PlayerPosition;
+public:
+
+    Player() {
+        this->PlayerPosition = { ScreenWidth / 2.,ScreenHeight / 2. };
+    }
+
+    Player(const std::string& PlayerName, short PlayerLevel, unsigned short PlayerLives, Vector2 PlayerPosition, float Rotation) {
+        this->PlayerLevel = PlayerLevel;
+        this->PlayerName = PlayerName;
+        this->PlayerLives = PlayerLives;
+        this->PlayerPosition = PlayerPosition;
+        this->Rotation = Rotation;
+    }
+
+    Player& operator=(const Player& player) {
+        this->PlayerName = player.PlayerName;
+        this->PlayerLevel = player.PlayerLevel;
+        this->PlayerLives = player.PlayerLives;
+        this->PlayerPosition = player.PlayerPosition;
+        this->Rotation = player.Rotation;
+
+        return *this;
+    }
+
+    Player(const Player& obj) {
+        this->PlayerLevel = obj.PlayerLevel;
+        this->PlayerName = obj.PlayerName;
+        this->PlayerLives = obj.PlayerLives;
+
+    }
+
+    friend std::ostream& operator<<(std::ostream& out, const Player& player) {
+        out << "Player name: " << player.PlayerName << '\n';
+        out << "Player level: " << player.PlayerLevel << '\n';
+        out << "Player Lives " << player.PlayerLives << '\n';
+
+        return out;
+    }
+
+    ~Player() {
+        std::cout << "Jucatorul " << this->PlayerName << " a fost distrus\n";
+    }
+
+    void Draw();
+
+    void Update();
+
+
+};
+
+void Player::Draw() {
+
+    //DrawPoly(this->PlayerPosition,3,ScreenHeight/60.f,Rotation,RED);
+    DrawPolyLinesEx(this->PlayerPosition, 3, ScreenHeight / 60.f, this->Rotation, 2., RED);
+
+}
+
+void Player::Update() {
+
+    if (IsKeyDown(KEY_LEFT)) {
+        std::cout << "Rotire la stanga\n";
+        this->Rotation -= 2.f;
+    }
+    if (IsKeyDown(KEY_RIGHT)) {
+        std::cout << "Rotire la dreapta\n";
+        this->Rotation += 2.f;
+    }
+
+    if (IsKeyDown(KEY_UP)) {
+        std::cout << "UP apasat\n";
+        this->PlayerPosition.x += cos((this->Rotation - 120) * PI / 180.);
+        this->PlayerPosition.y += sin((this->Rotation - 120) * PI / 180.);
+    }
+
+    if (IsKeyDown(KEY_DOWN)) {
+        std::cout << "DOWN apasat\n";
+        this->PlayerPosition.x -= cos((this->Rotation - 120) * PI / 180);
+        this->PlayerPosition.y -= sin((this->Rotation - 120) * PI / 180);
+    }
+
+    if (IsKeyPressed(KEY_ENTER)) {
+        std::cout << "Trage\n";
+
+        Projectile pr(1, 1, 10);
+
+
+
+    }
+
+    if (this->PlayerPosition.x < 0)this->PlayerPosition.x = 0;
+    if (this->PlayerPosition.x > ScreenWidth)this->PlayerPosition.x = ScreenWidth - 1;
+    if (this->PlayerPosition.y < 0)this->PlayerPosition.y = 0;
+    if (this->PlayerPosition.y > ScreenHeight)this->PlayerPosition.y = ScreenHeight - 1;
+
+    this->Draw();
+}
+
+class Enemy {
+private:
+    short HealthPoints;
+    std::string EnemyName;
+    short EnemyLevel;
+    unsigned short EnemySpeed;
+
+public:
+
+    Enemy() = default;
+
+    Enemy(const std::string& EnemyName, short HealthPoints, short EnemyLevel, unsigned short EnemySpeed) {
+        this->EnemyName = EnemyName;
+        this->EnemyLevel = EnemyLevel;
+        this->HealthPoints = HealthPoints;
+        this->EnemySpeed = EnemySpeed;
+    }
+
+    Enemy(const Enemy& obj) {
+        this->EnemyName = obj.EnemyName;
+        this->EnemyLevel = obj.EnemyLevel;
+        this->HealthPoints = obj.HealthPoints;
+        this->EnemySpeed = obj.EnemySpeed;
+    }
+
+    ~Enemy() {
+        std::cout << "Inamicul " << this->EnemyName << " a fost distrus\n";
+    }
+
+    friend std::ostream& operator<<(std::ostream& out, const Enemy& enemy) {
+        out << "Enemy name: " << enemy.EnemyName << '\n';
+        out << "Enemy level: " << enemy.EnemyLevel << '\n';
+        out << "Enemy HP: " << enemy.HealthPoints << '\n';
+        out << "Enemy speed: " << enemy.EnemySpeed << '\n';
+
+        return out;
+    }
+
+};
+
+class Menu {
+private:
+    unsigned int state;
+public:
+
+    Menu() {
+        std::cout << "Aplicatia a fost deschisa\n";
+    }
+
+    Menu(unsigned int state) {
+        this->state = state;
+    }
+
+    void RunApp(Player&);
+
+    ~Menu() {
+        std::cout << "Aplicatia a fost inchisa\n";
+    }
+};
+
+void Menu::RunApp(Player& player) {
+
+    InitWindow(1280, 720, "Project Asteroid");
+
+    SetTargetFPS(60);
+    HideCursor();
+
+    while (!WindowShouldClose()) {
+        BeginDrawing();
+        ClearBackground(BLACK);
+
+        player.Update();
+
+        EndDrawing();
+    }
+
+    CloseWindow();
+
+}
+
+int main() {
+    Menu meniu;
+
+
+    Player p1("Gigel", 1, 5, { ScreenWidth / 2.f,ScreenHeight / 2.f }, 30.);
+    std::cout << p1;
+
+    meniu.RunApp(p1);
+
+    Player p2 = p1;
+    std::cout << p2;
+
+    Enemy e1("Dorel", 2, 1, 10);
+    std::cout << e1;
+
+    Projectile pr1(1, 100, 10);
+    std::cout << pr1;
+
+    return 0;
+}
