@@ -7,6 +7,15 @@ constexpr int ScreenWidth = 1280;
 constexpr int ScreenHeight = 720;
 constexpr float DefaultRotation = 30.;
 
+enum
+{
+	MENU,
+    SETTINGS,
+    PLAYING,
+    PAUSE,
+    SHUTDOWN
+};
+
 class Projectile {
 private:
     unsigned int ProjectileType;
