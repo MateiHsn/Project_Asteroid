@@ -5,7 +5,7 @@
 
 constexpr int ScreenWidth = 1920;
 constexpr int ScreenHeight = 1200;
-constexpr float DefaultRotation = 30.;
+constexpr float DefaultRotation = 30;
 
 enum
 {
@@ -27,7 +27,7 @@ public:
 
     Projectile() = default;
 
-    Projectile(unsigned int ProjectileType, unsigned int ProjectileSpeed, unsigned int ProjectileDamage,Vector2 ProjectilePosition) {
+    Projectile(unsigned int ProjectileType, unsigned int ProjectileSpeed, unsigned int ProjectileDamage, Vector2 ProjectilePosition) {
         this->ProjectileType = ProjectileType;
         this->ProjectileSpeed = ProjectileSpeed;
         this->ProjectileDamage = ProjectileDamage;
@@ -121,7 +121,7 @@ public:
 void Player::Draw() {
 
     //DrawPoly(this->PlayerPosition,3,ScreenHeight/60.f,Rotation,RED);
-    DrawPolyLinesEx(this->PlayerPosition, 3, ScreenHeight / 60.f, this->Rotation, 2., RED);
+    DrawPolyLinesEx(this->PlayerPosition, 3, ScreenHeight / 50.f, this->Rotation, 2., RED);
 
 }
 
@@ -225,7 +225,7 @@ public:
 
 void Menu::RunApp(Player& player) {
 
-    InitWindow(ScreenWidth,ScreenHeight, "Project Asteroid");
+    InitWindow(ScreenWidth, ScreenHeight, "Project Asteroid");
 
     SetTargetFPS(60);
     HideCursor();
@@ -247,7 +247,7 @@ int main() {
     Menu meniu;
 
 
-    Player p1(std::string("Gigel"), 1, 5, { ScreenWidth / 2.f,ScreenHeight / 2.f }, 30.);
+    Player p1(std::string("Gigel"), 1, 5, { ScreenWidth / 2.f, ScreenHeight / 2.f }, 30.);
     std::cout << p1;
 
     meniu.RunApp(p1);
@@ -259,7 +259,7 @@ int main() {
     std::cout << e1;
 
 
-    Projectile pr1(1, 10, 100, Vector2{ ScreenHeight / 2.f,ScreenWidth / 2.f });
+    Projectile pr1(1, 10, 100, Vector2{ ScreenHeight / 2.f, ScreenWidth / 2.f });
 	std::cout << pr1;
 
 
