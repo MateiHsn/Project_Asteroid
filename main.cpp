@@ -1,10 +1,10 @@
 #include <iostream>
 #include <raylib.h>
-#include <rlgl.h>
+//#include <rlgl.h>
 #include <raymath.h>
 
-constexpr int ScreenWidth = 1280;
-constexpr int ScreenHeight = 720;
+constexpr int ScreenWidth = 1920;
+constexpr int ScreenHeight = 1200;
 constexpr float DefaultRotation = 30.;
 
 enum
@@ -21,28 +21,31 @@ private:
     unsigned int ProjectileType;
     unsigned int ProjectileSpeed;
     unsigned int ProjectileDamage;
+    Vector2 ProjectilePosition;
 
 public:
 
     Projectile() = default;
 
-    Projectile(unsigned int ProjectileType, unsigned int ProjectileSpeed, unsigned int ProjectileDamage) {
+    Projectile(unsigned int ProjectileType, unsigned int ProjectileSpeed, unsigned int ProjectileDamage,Vector2 ProjectilePosition) {
         this->ProjectileType = ProjectileType;
         this->ProjectileSpeed = ProjectileSpeed;
         this->ProjectileDamage = ProjectileDamage;
+        this->ProjectilePosition = ProjectilePosition;
     }
 
     Projectile(const Projectile& projectile) {
         this->ProjectileType = projectile.ProjectileType;
         this->ProjectileSpeed = projectile.ProjectileSpeed;
         this->ProjectileDamage = projectile.ProjectileDamage;
+        this->ProjectilePosition = projectile.ProjectilePosition;
     }
 
     friend std::ostream& operator <<(std::ostream& out, const Projectile& projectile) {
         out << "Projectile type: " << projectile.ProjectileType << '\n';
         out << "Projectile damage: " << projectile.ProjectileDamage << '\n';
         out << "Projectile speed: " << projectile.ProjectileSpeed << '\n';
-
+        out << "Pozitia proiectilului: " << projectile.ProjectilePosition.x << " " << projectile.ProjectilePosition.y << '\n';
         return out;
     }
 
@@ -50,11 +53,11 @@ public:
         std::cout << "Proiectilul de tip " << this->ProjectileType << " a ratat sau a nimerit\n";
     }
 
-    void Update();
+    void Update(Vector2,float);
     void Draw();
+    void Fire();
 
 };
-
 
 
 
@@ -126,27 +129,28 @@ void Player::Update() {
 
     if (IsKeyDown(KEY_LEFT)) {
         std::cout << "Rotire la stanga\n";
-        this->Rotation -= 2.f;
+        this->Rotation -= 5.f;
     }
     if (IsKeyDown(KEY_RIGHT)) {
         std::cout << "Rotire la dreapta\n";
-        this->Rotation += 2.f;
+        this->Rotation += 5.f;
     }
 
     if (IsKeyDown(KEY_UP)) {
         std::cout << "UP apasat\n";
-        this->PlayerPosition.x += cos((this->Rotation - 120) * PI / 180.);
-        this->PlayerPosition.y += sin((this->Rotation - 120) * PI / 180.);
+        this->PlayerPosition.x += cos((this->Rotation - 120) * PI / 180.)*2.f;
+        this->PlayerPosition.y += sin((this->Rotation - 120) * PI / 180.)*2.f;
     }
 
     if (IsKeyDown(KEY_DOWN)) {
         std::cout << "DOWN apasat\n";
-        this->PlayerPosition.x -= cos((this->Rotation - 120) * PI / 180);
-        this->PlayerPosition.y -= sin((this->Rotation - 120) * PI / 180);
+        this->PlayerPosition.x -= cos((this->Rotation - 120) * PI / 180)*2.f;
+        this->PlayerPosition.y -= sin((this->Rotation - 120) * PI / 180)*2.f;
     }
 
-    if (IsKeyPressed(KEY_ENTER)) {
+    if (IsKeyPressed(KEY_ENTER) or IsKeyPressed(KEY_SPACE)) {
         std::cout << "Trage\n";
+
 
 
     }
@@ -221,7 +225,7 @@ public:
 
 void Menu::RunApp(Player& player) {
 
-    InitWindow(1280, 720, "Project Asteroid");
+    InitWindow(ScreenWidth,ScreenHeight, "Project Asteroid");
 
     SetTargetFPS(60);
     HideCursor();
@@ -254,8 +258,10 @@ int main() {
     Enemy e1(std::string("Dorel"), 2, 1, 10);
     std::cout << e1;
 
-    Projectile pr1(1, 100, 10);
-    std::cout << pr1;
+
+    Projectile pr1(1, 10, 100, Vector2{ ScreenHeight / 2.f,ScreenWidth / 2.f });
+	std::cout << pr1;
+
 
     return 0;
 }
