@@ -118,7 +118,7 @@ public:
 
     void Update();
 
-
+    void ShowPos()const;
 };
 
 void Player::Draw() {
@@ -130,41 +130,47 @@ void Player::Draw() {
 
 void Player::Update() {
 
-    if (IsKeyDown(KEY_LEFT)) {
-        std::cout << "Rotire la stanga\n";
-        this->Rotation -= 5.f;
-    }
-    if (IsKeyDown(KEY_RIGHT)) {
-        std::cout << "Rotire la dreapta\n";
-        this->Rotation += 5.f;
-    }
+  if (IsKeyDown(KEY_LEFT)) {
+    std::cout << "Rotire la stanga\n";
+    this->Rotation -= 5.f;
+  }
+  if (IsKeyDown(KEY_RIGHT)) {
+    std::cout << "Rotire la dreapta\n";
+    this->Rotation += 5.f;
+  }
 
-    if (IsKeyDown(KEY_UP)) {
-        std::cout << "UP apasat\n";
-        this->PlayerPosition.x += cos((this->Rotation - 120) * PI / 180.)*2.f;
-        this->PlayerPosition.y += sin((this->Rotation - 120) * PI / 180.)*2.f;
-    }
+  if (IsKeyDown(KEY_UP)) {
+    std::cout << "UP apasat\n";
+    this->PlayerPosition.x += cos((this->Rotation - 120) * PI / 180.) * 2.f;
+    this->PlayerPosition.y += sin((this->Rotation - 120) * PI / 180.) * 2.f;
+  }
 
-    if (IsKeyDown(KEY_DOWN)) {
-        std::cout << "DOWN apasat\n";
-        this->PlayerPosition.x -= cos((this->Rotation - 120) * PI / 180)*2.f;
-        this->PlayerPosition.y -= sin((this->Rotation - 120) * PI / 180)*2.f;
-    }
+  if (IsKeyDown(KEY_DOWN)) {
+    std::cout << "DOWN apasat\n";
+    this->PlayerPosition.x -= cos((this->Rotation - 120) * PI / 180) * 2.f;
+    this->PlayerPosition.y -= sin((this->Rotation - 120) * PI / 180) * 2.f;
+  }
 
-    if (IsKeyPressed(KEY_ENTER) or IsKeyPressed(KEY_SPACE)) {
-        std::cout << "Trage\n";
+  if (IsKeyPressed(KEY_ENTER) or IsKeyPressed(KEY_SPACE)) {
+    std::cout << "Trage\n";
 
 
 
-    }
+  }
 
-    if (this->PlayerPosition.x < 0)this->PlayerPosition.x = 0;
-    if (this->PlayerPosition.x > ScreenWidth)this->PlayerPosition.x = ScreenWidth - 1;
-    if (this->PlayerPosition.y < 0)this->PlayerPosition.y = 0;
-    if (this->PlayerPosition.y > ScreenHeight)this->PlayerPosition.y = ScreenHeight - 1;
+  if (this->PlayerPosition.x < 0)this->PlayerPosition.x = 0;
+  if (this->PlayerPosition.x > ScreenWidth)this->PlayerPosition.x = ScreenWidth - 1;
+  if (this->PlayerPosition.y < 0)this->PlayerPosition.y = 0;
+  if (this->PlayerPosition.y > ScreenHeight)this->PlayerPosition.y = ScreenHeight - 1;
 
-    this->Draw();
+  this->Draw();
+  this->ShowPos();
 }
+
+void Player::ShowPos() const{
+  std::cout << PlayerPosition.x << ' ' << PlayerPosition.y << '\n';
+}
+
 
 class Enemy {
 private:
