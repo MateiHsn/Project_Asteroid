@@ -11,7 +11,7 @@ static float DefaultRotation = 30;
 //implicit, sprite-ul pt player e rotit
 //la un unghi de 30 de grade spre stanga
 //daca nu am adauga rotatia initiala
-static int multiplier = 2;
+static float multiplier = 2;
 
 
 
@@ -163,12 +163,18 @@ void Player::Update() {
     std::cout << "UP apasat\n";
     this->PlayerPosition.x += cos((this->Rotation - 120) * DEG2RAD) * multiplier;//fiecare update e alterat de multiplier
     this->PlayerPosition.y += sin((this->Rotation - 120) * DEG2RAD) * multiplier;//care va fi ajustabil pt toate tipurile de miscari
+
+    //this->PlayerPosition.x -= cos(this->Rotation * DEG2RAD) * multiplier;
+    //this->PlayerPosition.y -= sin(this->Rotation * DEG2RAD) * multiplier;
   }
 
   if (IsKeyDown(KEY_DOWN)) {
     std::cout << "DOWN apasat\n";
     this->PlayerPosition.x -= cos((this->Rotation - 120) * DEG2RAD) * multiplier;
     this->PlayerPosition.y -= sin((this->Rotation - 120) * DEG2RAD) * multiplier;
+
+    //this->PlayerPosition.x += cos(this->Rotation * DEG2RAD) * multiplier;
+    //this->PlayerPosition.y += sin(this->Rotation * DEG2RAD) * multiplier;
   }
 
   if (IsKeyPressed(KEY_ENTER) or IsKeyPressed(KEY_SPACE)) {
