@@ -3,59 +3,61 @@
 //#include <rlgl.h>
 #include <raymath.h>
 
-constexpr int ScreenWidth = 1920;
-constexpr int ScreenHeight = 1200;
-constexpr float DefaultRotation = 30;
+static float ScreenWidth = 1920;
+static float ScreenHeight = 1200;
+static float DefaultRotation = 30;
+static int multiplier = 2;
+
 
 enum
 {
-	MENU,
-    SETTINGS,
-    PLAYING,
-    PAUSE,
-    SHUTDOWN
+  MENU,
+  SETTINGS,
+  PLAYING,
+  PAUSE,
+  SHUTDOWN
 };
 
 class Projectile {
 private:
-    unsigned int ProjectileType;
-    unsigned int ProjectileSpeed;
-    unsigned int ProjectileDamage;
-    Vector2 ProjectilePosition;
+  unsigned int ProjectileType;
+  unsigned int ProjectileSpeed;
+  unsigned int ProjectileDamage;
+  Vector2 ProjectilePosition;
 
 public:
 
-    Projectile() = default;
+  Projectile() = default;
 
-    Projectile(unsigned int ProjectileType, unsigned int ProjectileSpeed, unsigned int ProjectileDamage, Vector2 ProjectilePosition) {
-        this->ProjectileType = ProjectileType;
-        this->ProjectileSpeed = ProjectileSpeed;
-        this->ProjectileDamage = ProjectileDamage;
-        this->ProjectilePosition = ProjectilePosition;
-    }
+  Projectile(unsigned int ProjectileType, unsigned int ProjectileSpeed, unsigned int ProjectileDamage, Vector2 ProjectilePosition) {
+    this->ProjectileType = ProjectileType;
+    this->ProjectileSpeed = ProjectileSpeed;
+    this->ProjectileDamage = ProjectileDamage;
+    this->ProjectilePosition = ProjectilePosition;
+  }
 
-    Projectile(const Projectile& projectile) {
-        this->ProjectileType = projectile.ProjectileType;
-        this->ProjectileSpeed = projectile.ProjectileSpeed;
-        this->ProjectileDamage = projectile.ProjectileDamage;
-        this->ProjectilePosition = projectile.ProjectilePosition;
-    }
+  Projectile(const Projectile& projectile) {
+    this->ProjectileType = projectile.ProjectileType;
+    this->ProjectileSpeed = projectile.ProjectileSpeed;
+    this->ProjectileDamage = projectile.ProjectileDamage;
+    this->ProjectilePosition = projectile.ProjectilePosition;
+  }
 
-    friend std::ostream& operator <<(std::ostream& out, const Projectile& projectile) {
-        out << "Projectile type: " << projectile.ProjectileType << '\n';
-        out << "Projectile damage: " << projectile.ProjectileDamage << '\n';
-        out << "Projectile speed: " << projectile.ProjectileSpeed << '\n';
-        out << "Pozitia proiectilului: " << projectile.ProjectilePosition.x << " " << projectile.ProjectilePosition.y << '\n';
-        return out;
-    }
+  friend std::ostream& operator <<(std::ostream& out, const Projectile& projectile) {
+    out << "Projectile type: " << projectile.ProjectileType << '\n';
+    out << "Projectile damage: " << projectile.ProjectileDamage << '\n';
+    out << "Projectile speed: " << projectile.ProjectileSpeed << '\n';
+    out << "Pozitia proiectilului: " << projectile.ProjectilePosition.x << " " << projectile.ProjectilePosition.y << '\n';
+    return out;
+  }
 
-    ~Projectile() {
-        std::cout << "Proiectilul de tip " << this->ProjectileType << " a ratat sau a nimerit\n";
-    }
+  ~Projectile() {
+    std::cout << "Proiectilul de tip " << this->ProjectileType << " a ratat sau a nimerit\n";
+  }
 
-    void Update(Vector2,float);
-    void Draw();
-    void Fire();
+  void Update(Vector2, float);
+  void Draw();
+  void Fire();
 
 };
 
@@ -71,7 +73,8 @@ private:
 public:
 
     Player() {
-        this->PlayerPosition = { ScreenWidth / 2.,ScreenHeight / 2. };
+      this->PlayerPosition.x = ScreenWidth / 2.;
+      this->PlayerPosition.y = ScreenWidth / 2.;
     }
 
     Player(const std::string& PlayerName, short PlayerLevel, unsigned short PlayerLives, Vector2 PlayerPosition, float Rotation) {
