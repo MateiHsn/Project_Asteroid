@@ -146,11 +146,11 @@ void Player::Update() {
 
   if (IsKeyDown(KEY_LEFT)) {
     std::cout << "Rotire la stanga\n";
-    this->Rotation -= 5.f;
+    this->Rotation -= 1.f * multiplier;
   }
   if (IsKeyDown(KEY_RIGHT)) {
     std::cout << "Rotire la dreapta\n";
-    this->Rotation += 5.f;
+    this->Rotation += 1.f * multiplier;
   }
 
   //la miscarea inainte/inapoi trebuie scazut 120 din unghiul dupa care se orienteaza sprite-ul
