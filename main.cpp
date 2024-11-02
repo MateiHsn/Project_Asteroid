@@ -7,7 +7,10 @@
 
 static float ScreenWidth = 1920;
 static float ScreenHeight = 1200;
-static float DefaultRotation = 30; //implicit, sprite-ul pt player e rotit la un unghi de 30 de grade spre stanga
+static float DefaultRotation = 30;
+//implicit, sprite-ul pt player e rotit
+//la un unghi de 30 de grade spre stanga
+//daca nu am adauga rotatia initiala
 static int multiplier = 2;
 
 
@@ -275,7 +278,7 @@ int main() {
   //aici sunt doar apelurile functiilor utilizarea constructorilor si a operatorilor supraincarcati
   //aici am apelat doar meniu.RunApp(p1) pentru ca restul functiilor sunt apelat in interiorul buclei de joc
 
-  Player p1(std::string("Gigel"), 1, 5, { ScreenWidth / 2.f, ScreenHeight / 2.f }, 30.);
+  Player p1(std::string("Gigel"), 1, 5, { ScreenWidth / 2.f, ScreenHeight / 2.f }, DefaultRotation);
   std::cout << p1;
 
   meniu.RunApp(p1);
