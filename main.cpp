@@ -8,7 +8,7 @@
 static float ScreenWidth = 1920;
 static float ScreenHeight = 1200;
 static float DefaultRotation = 30;
-static float multiplier = 2;
+static float multiplier = 1.5f;
 
 //implicit, sprite-ul pt player e rotit
 //la un unghi de 30 de grade spre stanga
@@ -173,7 +173,7 @@ void Player::Update() {
   // miscarea in dreapta/jos (la fel si la mersul inapoi) de asemenea argumentul
   // de Rotation din DrawPolyLinesEx() foloseste RADIANI si nu grade conversia
   // se face cu DEG2RAD din raylib
-
+  bool rotated = 0;
   if (IsKeyDown(KEY_UP)) {
     std::cout << "UP apasat\n";
     this->PlayerPosition.x +=
@@ -186,10 +186,12 @@ void Player::Update() {
     if (IsKeyDown(KEY_LEFT)) {
       std::cout << "Rotire la stanga\n";
       this->Rotation -= 2.f * multiplier;
+      rotated = 1;
     }
     if (IsKeyDown(KEY_RIGHT)) {
       std::cout << "Rotire la dreapta\n";
       this->Rotation += 2.f * multiplier;
+      rotated = 1;
     }
 
     // this->PlayerPosition.x -= cos(this->Rotation * DEG2RAD) * multiplier;
@@ -206,25 +208,28 @@ void Player::Update() {
     if (IsKeyDown(KEY_LEFT)) {
       std::cout << "Rotire la stanga\n";
       this->Rotation += 2.f * multiplier;
+      rotated = 1;
     }
     if (IsKeyDown(KEY_RIGHT)) {
       std::cout << "Rotire la dreapta\n";
       this->Rotation -= 2.f * multiplier;
+      rotated = 1;
     }
   
     // this->PlayerPosition.x += cos(this->Rotation * DEG2RAD) * multiplier;
     // this->PlayerPosition.y += sin(this->Rotation * DEG2RAD) * multiplier;
   }
 
-  if (IsKeyDown(KEY_LEFT)) {
-    std::cout << "Rotire la stanga\n";
-    this->Rotation -= 2.f * multiplier;
+  if (!rotated) {
+    if (IsKeyDown(KEY_LEFT)) {
+      std::cout << "Rotire la stanga\n";
+      this->Rotation -= 2.f * multiplier;
+    }
+    if (IsKeyDown(KEY_RIGHT)) {
+      std::cout << "Rotire la dreapta\n";
+      this->Rotation += 2.f * multiplier;
+    }
   }
-  if (IsKeyDown(KEY_RIGHT)) {
-    std::cout << "Rotire la dreapta\n";
-    this->Rotation += 2.f * multiplier;
-  }
-
 
   if (IsKeyPressed(KEY_ENTER) or IsKeyPressed(KEY_SPACE)) {
     Projectile p(1, 2, 10, Vector2{PlayerPosition.x, PlayerPosition.y});
