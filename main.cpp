@@ -182,21 +182,13 @@ void Player::Draw() const {
 
 
   //deseneaza direct poligonul doar din linii
-  DrawPolyLinesEx(this->PlayerPosition, 3, ScreenHeight / 50.f, this->Rotation, 1, RED);
+  DrawPolyLinesEx(this->PlayerPosition, 3, ScreenHeight / 50.f, this->Rotation, 2, RED);
 
 }
 
 void Player::Update() {
 
-  if (IsKeyDown(KEY_LEFT)) {
-    std::cout << "Rotire la stanga\n";
-    this->Rotation -= 2.f * multiplier;
-  }
-  if (IsKeyDown(KEY_RIGHT)) {
-    std::cout << "Rotire la dreapta\n";
-    this->Rotation += 2.f * multiplier;
-  }
-
+  
   //la miscarea inainte/inapoi trebuie scazut 120 din unghiul dupa care se orienteaza sprite-ul
   //pentru ca in mod normal incrementarea lui x/y duce la miscarea in dreapta/jos
   //(la fel si la mersul inapoi)
@@ -205,8 +197,18 @@ void Player::Update() {
 
   if (IsKeyDown(KEY_UP)) {
     std::cout << "UP apasat\n";
-    this->PlayerPosition.x += cos((this->Rotation - 120) * DEG2RAD) * multiplier;//fiecare update e alterat de multiplier
-    this->PlayerPosition.y += sin((this->Rotation - 120) * DEG2RAD) * multiplier;//care va fi ajustabil pt toate tipurile de miscari
+    this->PlayerPosition.x += cos((this->Rotation - 120) * DEG2RAD) * 2 * multiplier;//fiecare update e alterat de multiplier
+    this->PlayerPosition.y += sin((this->Rotation - 120) * DEG2RAD) * 2 * multiplier;//care va fi ajustabil pt toate tipurile de miscari
+
+    if (IsKeyDown ( KEY_LEFT )) {
+      std::cout << "Rotire la stanga\n";
+      this->Rotation -= 2.f * multiplier;
+    }
+    if (IsKeyDown ( KEY_RIGHT )) {
+      std::cout << "Rotire la dreapta\n";
+      this->Rotation += 2.f * multiplier;
+    }
+
 
     //this->PlayerPosition.x -= cos(this->Rotation * DEG2RAD) * multiplier;
     //this->PlayerPosition.y -= sin(this->Rotation * DEG2RAD) * multiplier;
@@ -214,8 +216,18 @@ void Player::Update() {
 
   if (IsKeyDown(KEY_DOWN)) {
     std::cout << "DOWN apasat\n";
-    this->PlayerPosition.x -= cos((this->Rotation - 120) * DEG2RAD) * multiplier;
-    this->PlayerPosition.y -= sin((this->Rotation - 120) * DEG2RAD) * multiplier;
+    this->PlayerPosition.x -= cos((this->Rotation - 120) * DEG2RAD) * 2 * multiplier;
+    this->PlayerPosition.y -= sin((this->Rotation - 120) * DEG2RAD) * 2 * multiplier;
+
+    if (IsKeyDown ( KEY_LEFT )) {
+      std::cout << "Rotire la stanga\n";
+      this->Rotation += 2.f * multiplier;
+    }
+    if (IsKeyDown ( KEY_RIGHT )) {
+      std::cout << "Rotire la dreapta\n";
+      this->Rotation -= 2.f * multiplier;
+    }
+
 
     //this->PlayerPosition.x += cos(this->Rotation * DEG2RAD) * multiplier;
     //this->PlayerPosition.y += sin(this->Rotation * DEG2RAD) * multiplier;
