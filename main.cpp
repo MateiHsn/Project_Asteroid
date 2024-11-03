@@ -211,19 +211,20 @@ void Player::Update() {
       std::cout << "Rotire la dreapta\n";
       this->Rotation -= 2.f * multiplier;
     }
+  
+    // this->PlayerPosition.x += cos(this->Rotation * DEG2RAD) * multiplier;
+    // this->PlayerPosition.y += sin(this->Rotation * DEG2RAD) * multiplier;
+  }
 
   if (IsKeyDown(KEY_LEFT)) {
     std::cout << "Rotire la stanga\n";
     this->Rotation -= 2.f * multiplier;
-    }
+  }
   if (IsKeyDown(KEY_RIGHT)) {
     std::cout << "Rotire la dreapta\n";
     this->Rotation += 2.f * multiplier;
   }
 
-    // this->PlayerPosition.x += cos(this->Rotation * DEG2RAD) * multiplier;
-    // this->PlayerPosition.y += sin(this->Rotation * DEG2RAD) * multiplier;
-  }
 
   if (IsKeyPressed(KEY_ENTER) or IsKeyPressed(KEY_SPACE)) {
     Projectile p(1, 2, 10, Vector2{PlayerPosition.x, PlayerPosition.y});
