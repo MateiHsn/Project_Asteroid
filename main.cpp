@@ -1,264 +1,257 @@
 #include <iostream>
+#include <ostream>
 #include <raylib.h>
-//#include <rlgl.h>
-#include <raymath.h>
-
-//variabilele globale trebuie mutate intr-o singura clasa + trebuie facut un singleton
 
 static float ScreenWidth = 1920;
 static float ScreenHeight = 1200;
 static float DefaultRotation = 30;
-static float multiplier = 1.5f;
 
-//implicit, sprite-ul pt player e rotit
-//la un unghi de 30 de grade spre stanga
-//daca nu am adauga rotatia initiala
+// Implicit, sprite-ul face un unghi de 30 de grade
+// cu verticala
 
-class DefaultParameters {
- private:
+static float Multiplier = 2.f;
+
+
+class DefaultParameters
+{
+private:
   float ScreenWidth;
   float ScreenHeight;
   float DefaultRotation;
   float Multiplier;
 
-  static DefaultParameters* instancePtr;
-
+  static DefaultParameters* InstancePtr;
   DefaultParameters();
 
- public:
+public:
   DefaultParameters(const DefaultParameters& obj) = delete;
 
-  static DefaultParameters* GetInstance() { return instancePtr; }
-
-  void SetValues(float ScrenWidth = GetScreenWidth(),
-                 float ScreenHeight = GetScreenHeight(),
-                 float DefaultRotation = 30, float Multiplier = 2) {
-    this->ScreenWidth = ScreenWidth;
-    this->ScreenHeight = ScreenHeight;
-    this->DefaultRotation = DefaultRotation;
-    this->Multiplier = Multiplier;
+  static DefaultParameters* GetInstance() { return InstancePtr; }
+  void set_screen_width(const float screen_width)
+  {
+    ScreenWidth = screen_width;
   }
-
-  void SetWindowDimensions();
-
-  void SetDefRotation();
-
-  void SetMultiplier();
+  void set_screen_height(const float screen_height)
+  {
+    ScreenHeight = screen_height;
+  }
+  void set_default_rotation(const float default_rotation)
+  {
+    DefaultRotation = default_rotation;
+  }
+  void set_multiplier(const float multiplier) { Multiplier = multiplier; }
 };
-
-//DefaultParameters* DefaultParameters::instancePtr = new DefaultParameters;
 
 enum { MENU, SETTINGS, PLAYING, PAUSE, SHUTDOWN };
 
-class Projectile {
- private:
-  unsigned int ProjectileType;
-  unsigned int ProjectileSpeed;
-  unsigned int ProjectileDamage;
+class Projectile
+{
+private:
+  unsigned ProjectyleType;
+  unsigned ProjectyleSpeed;
+  unsigned ProjectileDamage;
   Vector2 ProjectilePosition;
 
- public:
-  // constructori,destructori, operatori (pt milestone 1)
-
+public:
   Projectile() = default;
 
-  Projectile(unsigned int ProjectileType, unsigned int ProjectileSpeed,
-             unsigned int ProjectileDamage, Vector2 ProjectilePosition) {
-    this->ProjectileType = ProjectileType;
-    this->ProjectileSpeed = ProjectileSpeed;
-    this->ProjectileDamage = ProjectileDamage;
-    this->ProjectilePosition = ProjectilePosition;
+  Projectile(unsigned projectyle_type,
+             unsigned projectyle_speed,
+             unsigned projectile_damage,
+             const Vector2& projectile_position)
+    : ProjectyleType(projectyle_type)
+    , ProjectyleSpeed(projectyle_speed)
+    , ProjectileDamage(projectile_damage)
+    , ProjectilePosition(projectile_position)
+  {
+    std::cout << "S-a creat proiectilul " << this->ProjectyleType << '\n';
   }
 
-  Projectile(const Projectile& projectile) {
-    this->ProjectileType = projectile.ProjectileType;
-    this->ProjectileSpeed = projectile.ProjectileSpeed;
-    this->ProjectileDamage = projectile.ProjectileDamage;
-    this->ProjectilePosition = projectile.ProjectilePosition;
+  Projectile(const Projectile& other)
+    : ProjectyleType(other.ProjectyleType)
+    , ProjectyleSpeed(other.ProjectyleSpeed)
+    , ProjectileDamage(other.ProjectileDamage)
+    , ProjectilePosition(other.ProjectilePosition)
+  {
+    std::cout << "S-a copiat proiectilul " << this->ProjectyleType << '\n';
   }
 
-  friend std::ostream& operator<<(std::ostream& out,
-                                  const Projectile& projectile) {
-    out << "Projectile type: " << projectile.ProjectileType << '\n';
-    out << "Projectile damage: " << projectile.ProjectileDamage << '\n';
-    out << "Projectile speed: " << projectile.ProjectileSpeed << '\n';
-    out << "Pozitia proiectilului: " << projectile.ProjectilePosition.x << " "
-        << projectile.ProjectilePosition.y << '\n';
-    return out;
-  }
-
-  ~Projectile() {
-    std::cout << "Proiectilul de tip " << this->ProjectileType
-              << " a ratat sau a nimerit\n";
-  }
-
-  // update pozitie si rotatie player
-  // void Update ( Vector2, float );
-  // void Draw ( );
-  // void Fire ( );
-};
-
-
-class Player {
- private:
-  std::string PlayerName;
-  short PlayerLevel;
-  unsigned short PlayerLives;
-  float Rotation;
-  Vector2 PlayerPosition;
-  float Radius;
-
- public:
-  Player() = default;
-
-  Player(const std::string& PlayerName, short PlayerLevel,
-         unsigned short PlayerLives, Vector2 PlayerPosition, float Rotation,
-         float Radius = ScreenWidth / 60.) {
-    this->PlayerLevel = PlayerLevel;
-    this->PlayerName = PlayerName;
-    this->PlayerLives = PlayerLives;
-    this->PlayerPosition = PlayerPosition;
-    this->Rotation = Rotation;
-    this->Radius = Radius;
-  }
-
-  Player& operator=(const Player& player) {
-    this->PlayerName = player.PlayerName;
-    this->PlayerLevel = player.PlayerLevel;
-    this->PlayerLives = player.PlayerLives;
-    this->PlayerPosition = player.PlayerPosition;
-    this->Rotation = player.Rotation;
-    this->Radius = player.Radius;
-
+  Projectile& operator=(const Projectile& other)
+  {
+    if (this == &other)
+      return *this;
+    ProjectyleType = other.ProjectyleType;
+    ProjectyleSpeed = other.ProjectyleSpeed;
+    ProjectileDamage = other.ProjectileDamage;
+    ProjectilePosition = other.ProjectilePosition;
     return *this;
   }
 
-  Player(const Player& obj) {
-    this->PlayerLevel = obj.PlayerLevel;
-    this->PlayerName = obj.PlayerName;
-    this->PlayerLives = obj.PlayerLives;
-    this->Rotation = obj.Rotation;
-    this->PlayerPosition = obj.PlayerPosition;
-    this->Radius = obj.Radius;
+  friend std::ostream& operator<<(std::ostream& os, const Projectile& obj)
+  {
+    return os << "ProjectyleType: " << obj.ProjectyleType
+              << "\nProjectyleSpeed: " << obj.ProjectyleSpeed
+              << "\nProjectileDamage: " << obj.ProjectileDamage
+              << "\nProjectilePosition.x: " << obj.ProjectilePosition.x
+              << "\nProjectilePosition.y: " << obj.ProjectilePosition.y << '\n';
   }
 
-  friend std::ostream& operator<<(std::ostream& out, const Player& player) {
-    out << "Player name: " << player.PlayerName << '\n';
-    out << "Player level: " << player.PlayerLevel << '\n';
-    out << "Player Lives " << player.PlayerLives << '\n';
+  ~Projectile() { std::cout << "Proiectilul a fost ratat\n"; }
+};
 
-    return out;
+class Player
+{
+private:
+  std::string PlayerName;
+  short PlayerLevel;
+  short PlayerLive;
+  float Rotation;
+  Vector2 PlayerPosition;
+  float Radius;
+  int Sides;
+
+public:
+  Player() = default;
+
+  Player(const std::string& player_name,
+         short player_level,
+         short player_live,
+         float rotation,
+         const Vector2& player_position,
+         float radius,
+         int sides)
+    : PlayerName(player_name)
+    , PlayerLevel(player_level)
+    , PlayerLive(player_live)
+    , Rotation(rotation)
+    , PlayerPosition(player_position)
+    , Radius(radius)
+    , Sides(sides)
+  {
+    std::cout << "A fost creat jucatorul " << this->PlayerName << '\n';
   }
 
-  ~Player() {
-    std::cout << "Jucatorul " << this->PlayerName << " a fost distrus\n";
+  Player(const Player& other)
+    : PlayerName{ other.PlayerName }
+    , PlayerLevel{ other.PlayerLevel }
+    , PlayerLive{ other.PlayerLive }
+    , Rotation{ other.Rotation }
+    , PlayerPosition{ other.PlayerPosition }
+    , Radius{ other.Radius }
+    , Sides{ other.Sides }
+  {
+    std::cout << "A fost copiat jucatorul " << this->PlayerName << '\n';
   }
+
+  Player& operator=(const Player& other)
+  {
+    if (this == &other)
+      return *this;
+    PlayerName = other.PlayerName;
+    PlayerLevel = other.PlayerLevel;
+    PlayerLive = other.PlayerLive;
+    Rotation = other.Rotation;
+    PlayerPosition = other.PlayerPosition;
+    Radius = other.Radius;
+    Sides = other.Sides;
+    return *this;
+  }
+
+  friend std::ostream& operator<<(std::ostream& os, const Player& obj)
+  {
+    return os << "PlayerName: " << obj.PlayerName << '\n'
+              << " PlayerLevel: " << obj.PlayerLevel << '\n'
+              << " PlayerLive: " << obj.PlayerLive << '\n'
+              << " Rotation: " << obj.Rotation << '\n'
+              << " PlayerPosition: " << obj.PlayerPosition.x << ' '
+              << obj.PlayerPosition.y << '\n'
+              << " Radius: " << obj.Radius << '\n'
+              << " Sides: " << obj.Sides << '\n';
+  }
+
+  ~Player() { std::cout << "Jucator distrus\n"; }
 
   void Draw() const;
 
   void Update();
 
+  Vector2 GetPos() const;
+
   void ShowPos() const;
 };
 
 
-
-void Player::Draw() const {
-  // DrawPoly(this->PlayerPosition,3,ScreenHeight/60.f,Rotation,RED);
-  // DrawPoly() creeaza poligoane umplute
-
-  // deseneaza direct poligonul doar din linii
-  DrawPolyLinesEx(this->PlayerPosition, 3, Radius, this->Rotation,
-                  2, RED);
+void
+Player::Draw() const
+{
+  DrawPolyLinesEx(
+    this->PlayerPosition, this->Sides, this->Radius, this->Rotation, 2, RED);
 }
 
-void Player::Update() {
-  // la miscarea inainte/inapoi trebuie scazut 120 din unghiul dupa care se
-  // orienteaza sprite-ul pentru ca in mod normal incrementarea lui x/y duce la
-  // miscarea in dreapta/jos (la fel si la mersul inapoi) de asemenea argumentul
-  // de Rotation din DrawPolyLinesEx() foloseste RADIANI si nu grade conversia
-  // se face cu DEG2RAD din raylib
-
-  bool rotated =
-      0;  // previne actualizarea dubla a unghiului de rotatie pt sprite
-          //(nu se mai actualizeaza de 2 ori rotatia in timpul miscarii)
-
+void
+Player::Update()
+{
+  bool rotated = 0; // cand playerul se misca inainte sau inapoi, daca nu se
+                    // previne intrarea
+  // in ultima pereche de checkuri pentru rotatie, aceasta se va face de 2 ori
+  // deci jucatorul se va roti de 2 ori mai mult daca se misca inainte-inapoi
+  // (ar merge lasat feature si nu bug???? hmmmmm...)
+  // de aia exista bool-ul asta
   if (IsKeyDown(KEY_UP)) {
-    std::cout << "UP apasat\n";
     this->PlayerPosition.x +=
-        cos((this->Rotation - 120) * DEG2RAD) * 2 *
-        multiplier;  // fiecare update e alterat de multiplier
+      cos((this->Rotation - 120) * DEG2RAD) * 1.5 * Multiplier;
     this->PlayerPosition.y +=
-        sin((this->Rotation - 120) * DEG2RAD) * 2 *
-        multiplier;  // care va fi ajustabil pt toate tipurile de miscari
+      sin((this->Rotation - 120) * DEG2RAD) * 1.5 * Multiplier;
 
-    if (IsKeyDown(KEY_LEFT)) {
-      std::cout << "Rotire la stanga\n";
-      this->Rotation -= 2.f * multiplier;
-      rotated = 1;
-    }
     if (IsKeyDown(KEY_RIGHT)) {
-      std::cout << "Rotire la dreapta\n";
-      this->Rotation += 2.f * multiplier;
-      rotated = 1;
+      this->Rotation += 2 * Multiplier;
+      rotated = true;
     }
-
-    // this->PlayerPosition.x -= cos(this->Rotation * DEG2RAD) * multiplier;
-    // this->PlayerPosition.y -= sin(this->Rotation * DEG2RAD) * multiplier;
+    if (IsKeyDown(KEY_LEFT)) {
+      this->Rotation -= 2 * Multiplier;
+      rotated = true;
+    }
   }
-
   if (IsKeyDown(KEY_DOWN)) {
-    std::cout << "DOWN apasat\n";
     this->PlayerPosition.x -=
-        cos((this->Rotation - 120) * DEG2RAD) * 2 * multiplier;
+      cos((this->Rotation - 120) * DEG2RAD) * 1.5 * Multiplier;
     this->PlayerPosition.y -=
-        sin((this->Rotation - 120) * DEG2RAD) * 2 * multiplier;
+      sin((this->Rotation - 120) * DEG2RAD) * 1.5 * Multiplier;
 
-    if (IsKeyDown(KEY_LEFT)) {
-      std::cout << "Rotire la stanga\n";
-      this->Rotation += 2.f * multiplier;
-      rotated = 1;
-    }
     if (IsKeyDown(KEY_RIGHT)) {
-      std::cout << "Rotire la dreapta\n";
-      this->Rotation -= 2.f * multiplier;
-      rotated = 1;
+      this->Rotation -= 2 * Multiplier;
+      rotated = true;
     }
-
-    // this->PlayerPosition.x += cos(this->Rotation * DEG2RAD) * multiplier;
-    // this->PlayerPosition.y += sin(this->Rotation * DEG2RAD) * multiplier;
+    if (IsKeyDown(KEY_LEFT)) {
+      this->Rotation += 2 * Multiplier;
+      rotated = true;
+    }
   }
 
   if (!rotated) {
-    if (IsKeyDown(KEY_LEFT)) {
-      std::cout << "Rotire la stanga\n";
-      this->Rotation -= 2.f * multiplier;
-    }
     if (IsKeyDown(KEY_RIGHT)) {
-      std::cout << "Rotire la dreapta\n";
-      this->Rotation += 2.f * multiplier;
+      this->Rotation += 2 * Multiplier;
+    }
+    if (IsKeyDown(KEY_LEFT)) {
+      this->Rotation -= 2 * Multiplier;
     }
   }
 
-  if (IsKeyPressed(KEY_ENTER) or IsKeyPressed(KEY_SPACE)) {
-    Projectile p(1, 2, 10, Vector2{PlayerPosition.x, PlayerPosition.y});
-    std::cout << "Trage\n";
+  if (IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_SPACE)) {
+    Projectile p1(1, 10, 10, this->PlayerPosition);
+    std::cout << "\n\n\n--Trage--\n\n\n";
   }
 
-  // check pentru ca jucatorul sa nu iasa din fereastra
-  // il muta fix la coordonatele pentru margine - raza cercului inscris
-  // poligonului descris de sprite impartita la 2 (pentru a nu avea coliziuni
-  // ciudate)
+  // pentru ca jucatorul sa nu iasa din fereastra
+  // trebuie impuse limite superioare/inferioare pentru unde poate ajunge
+  // caracterul
 
   if (this->PlayerPosition.x < Radius / 2.)
     this->PlayerPosition.x = Radius / 2.;
-
   if (this->PlayerPosition.x > ScreenWidth - Radius / 2.)
     this->PlayerPosition.x = ScreenWidth - Radius / 2.;
-
   if (this->PlayerPosition.y < Radius / 2.)
     this->PlayerPosition.y = Radius / 2.;
-
   if (this->PlayerPosition.y > ScreenHeight - Radius / 2.)
     this->PlayerPosition.y = ScreenHeight - Radius / 2.;
 
@@ -266,69 +259,102 @@ void Player::Update() {
   this->ShowPos();
 }
 
+void
+Player::ShowPos() const
+{
+  std::cout << "Pozitie: " << this->PlayerPosition.x << ' '
+            << this->PlayerPosition.y << '\n';
+}
 
-void Player::ShowPos() const {
-  std::cout << PlayerPosition.x << ' ' << PlayerPosition.y << '\n';
+Vector2
+Player::GetPos() const
+{
+  return this->PlayerPosition;
 }
 
 
-class Enemy {
- private:
-  short HealthPoints;
+class Enemy
+{
+private:
   std::string EnemyName;
+  short HealthPoints;
   short EnemyLevel;
-  unsigned short EnemySpeed;
+  short EnemySpeed;
 
- public:
+public:
   Enemy() = default;
 
-  Enemy(const std::string& EnemyName, short HealthPoints, short EnemyLevel,
-        unsigned short EnemySpeed) {
-    this->EnemyName = EnemyName;
-    this->EnemyLevel = EnemyLevel;
-    this->HealthPoints = HealthPoints;
-    this->EnemySpeed = EnemySpeed;
+  Enemy(const std::string& enemy_name,
+        short health_points,
+        short enemy_level,
+        short enemy_speed)
+    : EnemyName(enemy_name)
+    , HealthPoints(health_points)
+    , EnemyLevel(enemy_level)
+    , EnemySpeed(enemy_speed)
+  {
+    std::cout << "Inamicul " << this->EnemyName << " a fost creat\n";
   }
 
-  Enemy(const Enemy& obj) {
-    this->EnemyName = obj.EnemyName;
-    this->EnemyLevel = obj.EnemyLevel;
-    this->HealthPoints = obj.HealthPoints;
-    this->EnemySpeed = obj.EnemySpeed;
+  Enemy(const Enemy& other)
+    : EnemyName{ other.EnemyName }
+    , HealthPoints{ other.HealthPoints }
+    , EnemyLevel{ other.EnemyLevel }
+    , EnemySpeed{ other.EnemySpeed }
+  {
+    std::cout << "S-a copiat inamicul " << this->EnemyName << '\n';
   }
 
-  ~Enemy() {
-    std::cout << "Inamicul " << this->EnemyName << " a fost distrus\n";
+  Enemy& operator=(const Enemy& other)
+  {
+    if (this == &other)
+      return *this;
+    EnemyName = other.EnemyName;
+    HealthPoints = other.HealthPoints;
+    EnemyLevel = other.EnemyLevel;
+    EnemySpeed = other.EnemySpeed;
+    return *this;
   }
 
-  friend std::ostream& operator<<(std::ostream& out, const Enemy& enemy) {
-    out << "Enemy name: " << enemy.EnemyName << '\n';
-    out << "Enemy level: " << enemy.EnemyLevel << '\n';
-    out << "Enemy HP: " << enemy.HealthPoints << '\n';
-    out << "Enemy speed: " << enemy.EnemySpeed << '\n';
-
-    return out;
+  friend std::ostream& operator<<(std::ostream& os, const Enemy& obj) {
+    return os
+      << "EnemyName: " << obj.EnemyName
+      << "\nHealthPoints: " << obj.HealthPoints
+      << "\nEnemyLevel: " << obj.EnemyLevel
+      << "\nEnemySpeed: " << obj.EnemySpeed;
   }
+
+  ~Enemy() { std::cout << "Inamic Distrus\n"; }
 };
 
-class Menu {
- private:
-  unsigned int state;
+class Menu
+{
+private:
+  char state;
 
- public:
-  Menu() { std::cout << "Aplicatia a fost deschisa\n"; }
+public:
+  Menu() = default;
 
-  Menu(unsigned int state) { this->state = state; }
+  Menu(char state)
+    : state(state)
+  {
+    std::cout << "S-a creat meniul " << this->state << '\n';
+  }
 
-  void RunApp(Player&);
+  friend std::ostream& operator<<(std::ostream& os, const Menu& obj)
+  {
+    return os << "state: " << obj.state;
+  }
 
-  ~Menu() { std::cout << "Aplicatia a fost inchisa\n"; }
+  static void RunApp(Player);
+
+  ~Menu() { std::cout << "Gata cu fotosinteza, la culcare toata lumea!\n"; };
 };
 
-void Menu::RunApp(Player& player) {  // la baza e game loop-ul
-
+void
+Menu::RunApp(Player player)
+{
   InitWindow(ScreenWidth, ScreenHeight, "Project Asteroid");
-
   SetTargetFPS(60);
   HideCursor();
 
@@ -336,7 +362,7 @@ void Menu::RunApp(Player& player) {  // la baza e game loop-ul
     BeginDrawing();
     ClearBackground(BLACK);
 
-    player.Update();  // apelul functiei care actualizeaza tot despre jucator
+    player.Update(); // apel catre functia de update pentru player
 
     EndDrawing();
   }
@@ -344,27 +370,36 @@ void Menu::RunApp(Player& player) {  // la baza e game loop-ul
   CloseWindow();
 }
 
-int main() {
-  Menu meniu;
+int
+main()
+{
 
-  // aici sunt doar apelurile functiilor utilizarea constructorilor si a
-  // operatorilor supraincarcati aici am apelat doar meniu.RunApp(p1) pentru ca
-  // restul functiilor sunt apelat in interiorul buclei de joc
+  Player p1("Gigel",
+            1,
+            5,
+            DefaultRotation,
+            { ScreenWidth / 2.f, ScreenHeight / 2.f },
+            ScreenWidth / 60.,
+            3);
 
-  Player p1(std::string("Gigel"), 1, 5, {ScreenWidth / 2.f, ScreenHeight / 2.f},
-            DefaultRotation);
   std::cout << p1;
+
+  Menu meniu(1);
 
   meniu.RunApp(p1);
 
-  Player p2 = p1;
+  Player* p2 = &p1;
+
   std::cout << p2;
 
-  Enemy e1(std::string("Dorel"), 2, 1, 10);
+  Enemy e1("Dorel", 10, 2, 100);
+
   std::cout << e1;
 
-  Projectile pr1(1, 10, 100, Vector2{ScreenHeight / 2.f, ScreenWidth / 2.f});
+  Projectile pr1(1, 10, 50, p1.GetPos());
   std::cout << pr1;
-
-  return 0;
 }
+
+
+
+
