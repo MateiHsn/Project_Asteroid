@@ -23,7 +23,7 @@ class DefaultParameters {
 
   static DefaultParameters* instancePtr;
 
-  DefaultParameters() {}
+  DefaultParameters();
 
  public:
   DefaultParameters(const DefaultParameters& obj) = delete;
@@ -106,17 +106,20 @@ class Player {
   unsigned short PlayerLives;
   float Rotation;
   Vector2 PlayerPosition;
+  float Radius;
 
  public:
   Player() = default;
 
   Player(const std::string& PlayerName, short PlayerLevel,
-         unsigned short PlayerLives, Vector2 PlayerPosition, float Rotation) {
+         unsigned short PlayerLives, Vector2 PlayerPosition, float Rotation,
+         float Radius = ScreenWidth / 60.) {
     this->PlayerLevel = PlayerLevel;
     this->PlayerName = PlayerName;
     this->PlayerLives = PlayerLives;
     this->PlayerPosition = PlayerPosition;
     this->Rotation = Rotation;
+    this->Radius = Radius;
   }
 
   Player& operator=(const Player& player) {
@@ -125,6 +128,7 @@ class Player {
     this->PlayerLives = player.PlayerLives;
     this->PlayerPosition = player.PlayerPosition;
     this->Rotation = player.Rotation;
+    this->Radius = player.Radius;
 
     return *this;
   }
@@ -135,6 +139,7 @@ class Player {
     this->PlayerLives = obj.PlayerLives;
     this->Rotation = obj.Rotation;
     this->PlayerPosition = obj.PlayerPosition;
+    this->Radius = obj.Radius;
   }
 
   friend std::ostream& operator<<(std::ostream& out, const Player& player) {
@@ -163,7 +168,7 @@ void Player::Draw() const {
   // DrawPoly() creeaza poligoane umplute
 
   // deseneaza direct poligonul doar din linii
-  DrawPolyLinesEx(this->PlayerPosition, 3, ScreenHeight / 50.f, this->Rotation,
+  DrawPolyLinesEx(this->PlayerPosition, 3, Radius, this->Rotation,
                   2, RED);
 }
 
@@ -173,7 +178,11 @@ void Player::Update() {
   // miscarea in dreapta/jos (la fel si la mersul inapoi) de asemenea argumentul
   // de Rotation din DrawPolyLinesEx() foloseste RADIANI si nu grade conversia
   // se face cu DEG2RAD din raylib
-  bool rotated = 0;
+
+  bool rotated =
+      0;  // previne actualizarea dubla a unghiului de rotatie pt sprite
+          //(nu se mai actualizeaza de 2 ori rotatia in timpul miscarii)
+
   if (IsKeyDown(KEY_UP)) {
     std::cout << "UP apasat\n";
     this->PlayerPosition.x +=
@@ -215,7 +224,7 @@ void Player::Update() {
       this->Rotation -= 2.f * multiplier;
       rotated = 1;
     }
-  
+
     // this->PlayerPosition.x += cos(this->Rotation * DEG2RAD) * multiplier;
     // this->PlayerPosition.y += sin(this->Rotation * DEG2RAD) * multiplier;
   }
@@ -237,18 +246,26 @@ void Player::Update() {
   }
 
   // check pentru ca jucatorul sa nu iasa din fereastra
-  // il muta fix la margine
+  // il muta fix la coordonatele pentru margine - raza cercului inscris
+  // poligonului descris de sprite impartita la 2 (pentru a nu avea coliziuni
+  // ciudate)
 
-  if (this->PlayerPosition.x < 0) this->PlayerPosition.x = 0;
-  if (this->PlayerPosition.x > ScreenWidth)
-    this->PlayerPosition.x = ScreenWidth;
-  if (this->PlayerPosition.y < 0) this->PlayerPosition.y = 0;
-  if (this->PlayerPosition.y > ScreenHeight)
-    this->PlayerPosition.y = ScreenHeight;
+  if (this->PlayerPosition.x < Radius / 2.)
+    this->PlayerPosition.x = Radius / 2.;
+
+  if (this->PlayerPosition.x > ScreenWidth - Radius / 2.)
+    this->PlayerPosition.x = ScreenWidth - Radius / 2.;
+
+  if (this->PlayerPosition.y < Radius / 2.)
+    this->PlayerPosition.y = Radius / 2.;
+
+  if (this->PlayerPosition.y > ScreenHeight - Radius / 2.)
+    this->PlayerPosition.y = ScreenHeight - Radius / 2.;
 
   this->Draw();
   this->ShowPos();
 }
+
 
 void Player::ShowPos() const {
   std::cout << PlayerPosition.x << ' ' << PlayerPosition.y << '\n';
