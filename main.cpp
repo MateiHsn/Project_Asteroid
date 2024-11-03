@@ -19,7 +19,7 @@ class DefaultParameters {
   float ScreenWidth;
   float ScreenHeight;
   float DefaultRotation;
-  float multiplier;
+  float Multiplier;
 
   static DefaultParameters * instancePtr;
 
@@ -39,8 +39,15 @@ class DefaultParameters {
     this->ScreenWidth = ScreenWidth;
     this->ScreenHeight = ScreenHeight;
     this->DefaultRotation = DefaultRotation;
-    this->multiplier = Multiplier;
+    this->Multiplier = Multiplier;
   }
+
+  void SetWidth ( );
+  void SetHeight ( );
+  void SetDefRotation ( );
+  void SetMultiplier ( );
+
+
 
 };
 
@@ -194,7 +201,7 @@ void Player::Update() {
   //pentru ca in mod normal incrementarea lui x/y duce la miscarea in dreapta/jos
   //(la fel si la mersul inapoi)
   //de asemenea argumentul de Rotation din DrawPolyLinesEx() foloseste RADIANI si nu grade
-  //cu DEG2RAD din raylib
+  //conversia se face cu DEG2RAD din raylib
 
   if (IsKeyDown(KEY_UP)) {
     std::cout << "UP apasat\n";
