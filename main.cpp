@@ -9,7 +9,8 @@ static float DefaultRotation = 30;
 // Implicit, sprite-ul face un unghi de 30 de grade
 // cu verticala
 
-static float Multiplier = 2.f;
+static float Multiplier = 2.f; // de variabila asta depinde factorul de multiplicare al tuturor variatilor
+//
 
 
 class DefaultParameters
