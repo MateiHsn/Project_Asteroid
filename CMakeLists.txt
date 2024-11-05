@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.26)
+ cmake_minimum_required(VERSION 3.26)
 
 # NOTE: update executable name in .github/workflows/cmake.yml:25 when changing executable name in this file
 # for now, the project name is used as the executable name
@@ -16,7 +16,7 @@ include(cmake/Options.cmake)
 ###############################################################################
 
 # external dependencies with FetchContent
-# include(FetchContent)
+ include(FetchContent)
 #
 # set(FETCHCONTENT_QUIET OFF)
 # set(FETCHCONTENT_UPDATES_DISCONNECTED ON)
@@ -24,14 +24,14 @@ include(cmake/Options.cmake)
 # NOTE: Also update env vars used for caching in
 #         - .github/actions/configure-cmake/action.yml
 #         - .github/workflows/cmake.yml
-# FetchContent_Declare(
-#         SomeLib
-#         GIT_REPOSITORY https://github.com/<SomeUser>/<SomeLib>.git
-#         GIT_TAG        <some_git_hash> # <which tag/branch @ <some_date>>
-#         GIT_SHALLOW    1  # works only with branches or tags, not with arbitrary commit hashes
-# )
+ FetchContent_Declare(
+         raylib
+         GIT_REPOSITORY https://github.com/raysan5/raylib.git
+         GIT_TAG "master" # <which tag/branch @ <some_date>>
+         GIT_SHALLOW    True # works only with branches or tags, not with arbitrary commit hashes
+ )
 #
-# FetchContent_MakeAvailable(SomeLib)
+ FetchContent_MakeAvailable(raylib)
 
 ###############################################################################
 
@@ -56,7 +56,7 @@ target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE generated/include)
 # target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ext/<SomeHppLib>/include)
 # target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ${<SomeLib>_SOURCE_DIR}/include)
 # target_link_directories(${PROJECT_NAME} PRIVATE ${<SomeLib>_BINARY_DIR}/lib)
-# target_link_libraries(${PROJECT_NAME} <SomeLib>)
+ target_link_libraries(${PROJECT_NAME} raylib)
 
 ###############################################################################
 
