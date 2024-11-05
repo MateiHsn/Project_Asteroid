@@ -16,7 +16,7 @@ static float Multiplier = 2.f; // de variabila asta depinde factorul de multipli
 
 //Inceput implementare clasa singleton pentru a nu a mai tine parametrii impliciti ca variabile globale
 
-/*
+
 class DefaultParameters
 {
 private:
@@ -46,7 +46,7 @@ public:
   }
   void set_multiplier(const float multiplier) { Multiplier = multiplier; }
 };
-*/
+
 enum { MENU, SETTINGS, PLAYING, PAUSE, SHUTDOWN };
 
 class Projectile
