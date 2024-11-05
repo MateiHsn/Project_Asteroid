@@ -207,7 +207,7 @@ Player::Update()
       cos((this->Rotation - 120) * DEG2RAD) * 1.5 * Multiplier;
     this->PlayerPosition.y +=
       sin((this->Rotation - 120) * DEG2RAD) * 1.5 * Multiplier;
-
+    /*
     if (IsKeyDown(KEY_RIGHT)) {
       this->Rotation += 2 * Multiplier;
       rotated = true;
@@ -216,6 +216,7 @@ Player::Update()
       this->Rotation -= 2 * Multiplier;
       rotated = true;
     }
+    */
   }
   if (IsKeyDown(KEY_DOWN)) {
     this->PlayerPosition.x -=
