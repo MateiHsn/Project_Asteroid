@@ -1,6 +1,8 @@
 #include <iostream>
 #include <ostream>
 #include <raylib.h>
+#include <raymath.h>
+#include <cmath>
 
 static float ScreenWidth = 1920;
 static float ScreenHeight = 1200;
