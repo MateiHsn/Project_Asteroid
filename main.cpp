@@ -3,9 +3,10 @@
 #include <raylib.h>
 #include <raymath.h>
 #include <cmath>
+#include <mutex>
 
-static float ScreenWidth = 1920;
-static float ScreenHeight = 1200;
+static float ScreenWidth = 1280;
+static float ScreenHeight = 720;
 static float DefaultRotation = 30;
 
 // Implicit, sprite-ul face un unghi de 30 de grade
@@ -16,7 +17,6 @@ static float Multiplier = 2.f; // de variabila asta depinde factorul de multipli
 
 //Inceput implementare clasa singleton pentru a nu a mai tine parametrii impliciti ca variabile globale
 
-
 class DefaultParameters
 {
 private:
@@ -24,27 +24,24 @@ private:
   float ScreenHeight;
   float DefaultRotation;
   float Multiplier;
-
   static DefaultParameters* InstancePtr;
   DefaultParameters();
 
 public:
+  
+  DefaultParameters(float ScreenWidth,
+                    float ScreenHeight,
+                    float DefaultRotation,
+                    float Multiplier)
+    : ScreenWidth(ScreenWidth)
+    , ScreenHeight(ScreenHeight)
+  {
+  }
+
+  
   DefaultParameters(const DefaultParameters& obj) = delete;
 
-  static DefaultParameters* GetInstance() { return InstancePtr; }
-  void set_screen_width(const float screen_width)
-  {
-    ScreenWidth = screen_width;
-  }
-  void set_screen_height(const float screen_height)
-  {
-    ScreenHeight = screen_height;
-  }
-  void set_default_rotation(const float default_rotation)
-  {
-    DefaultRotation = default_rotation;
-  }
-  void set_multiplier(const float multiplier) { Multiplier = multiplier; }
+
 };
 
 enum { MENU, SETTINGS, PLAYING, PAUSE, SHUTDOWN };
@@ -360,20 +357,48 @@ public:
 void
 Menu::RunApp(Player player)
 {
+  SetExitKey(KEY_NULL);
+
+  bool ExitWindowRequested = false;
+  bool ExitWindow = false;
+
   InitWindow(ScreenWidth, ScreenHeight, "Project Asteroid");
   SetTargetFPS(60);
   HideCursor();
 
-  while (!WindowShouldClose()) {
-    BeginDrawing();
-    ClearBackground(BLACK);
+  while (!ExitWindow) {
+    if (WindowShouldClose() || IsKeyPressed(KEY_ESCAPE)) ExitWindowRequested = true;
 
-    player.Update(); // apel catre functia de update pentru player
+    if (ExitWindowRequested) {
+      if (IsKeyPressed(KEY_Y))
+        ExitWindow = true;
+      if (IsKeyPressed(KEY_N))
+        ExitWindowRequested = false;
+    }
+
+
+    BeginDrawing();
+    
+    
+    if (ExitWindowRequested) {
+      DrawRectangle(
+        0, ScreenHeight / 3., ScreenWidth, ScreenHeight / 10., RAYWHITE);
+      DrawText("Are you sure you want to exit the game? [Y/N]",
+               ScreenWidth / 3.,
+               ScreenHeight * 9. / 24.,
+               ScreenHeight / 60.,
+               BLACK);
+    } else {
+      player.Update(); // apel catre functia de update pentru player
+    }
+
+    
+    ClearBackground(BLACK);
 
     EndDrawing();
   }
 
-  CloseWindow();
+  CloseWindow(); 
 }
 
 int
