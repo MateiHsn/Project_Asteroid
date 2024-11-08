@@ -29,12 +29,14 @@ private:
 
 public:
   
-  DefaultParameters(float ScreenWidth,
-                    float ScreenHeight,
-                    float DefaultRotation,
-                    float Multiplier)
+  DefaultParameters(float ScreenWidth = 1920,
+                    float ScreenHeight = 1080,
+                    float DefaultRotation = 30,
+                    float Multiplier = 2)
     : ScreenWidth(ScreenWidth)
     , ScreenHeight(ScreenHeight)
+    , DefaultRotation(DefaultRotation)
+    , Multiplier(Multiplier)
   {
   }
 
