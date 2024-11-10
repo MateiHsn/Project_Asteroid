@@ -17,31 +17,27 @@ static float Multiplier = 2.f; // de variabila asta depinde factorul de multipli
 
 //Inceput implementare clasa singleton pentru a nu a mai tine parametrii impliciti ca variabile globale
 
-class DefaultParameters
-{
-private:
+class DefaultParameters {
+  private:
   float ScreenWidth;
   float ScreenHeight;
   float DefaultRotation;
   float Multiplier;
-  static DefaultParameters* InstancePtr;
-  DefaultParameters();
+  static DefaultParameters * InstancePtr;
+  DefaultParameters ( );
 
-public:
-  
-  DefaultParameters(float ScreenWidth = 1920,
-                    float ScreenHeight = 1080,
-                    float DefaultRotation = 30,
-                    float Multiplier = 2)
-    : ScreenWidth(ScreenWidth)
-    , ScreenHeight(ScreenHeight)
-    , DefaultRotation(DefaultRotation)
-    , Multiplier(Multiplier)
-  {
-  }
+  public:
 
-  
-  DefaultParameters(const DefaultParameters& obj) = delete;
+  DefaultParameters ( float ScreenWidth = 1920,
+                      float ScreenHeight = 1080,
+                      float DefaultRotation = 30,
+                      float Multiplier = 2 )
+    : ScreenWidth ( ScreenWidth )
+    , ScreenHeight ( ScreenHeight )
+    , DefaultRotation ( DefaultRotation )
+    , Multiplier ( Multiplier ) { }
+
+  DefaultParameters ( const DefaultParameters & obj ) = delete;
 
 
 };
@@ -51,41 +47,41 @@ enum { MENU, SETTINGS, PLAYING, PAUSE, SHUTDOWN };
 class Projectile
 {
 private:
-  unsigned ProjectyleType;
-  unsigned ProjectyleSpeed;
+  unsigned ProjectileType;
+  unsigned ProjectileSpeed;
   unsigned ProjectileDamage;
   Vector2 ProjectilePosition;
 
 public:
   Projectile() = default;
 
-  Projectile(unsigned projectyle_type,
-             unsigned projectyle_speed,
+  Projectile(unsigned projectile_type,
+             unsigned projectile_speed,
              unsigned projectile_damage,
              const Vector2& projectile_position)
-    : ProjectyleType(projectyle_type)
-    , ProjectyleSpeed(projectyle_speed)
+    : ProjectileType(projectile_type)
+    , ProjectileSpeed(projectile_speed)
     , ProjectileDamage(projectile_damage)
     , ProjectilePosition(projectile_position)
   {
-    std::cout << "S-a creat proiectilul " << this->ProjectyleType << '\n';
+    std::cout << "S-a creat proiectilul " << this->ProjectileType << '\n';
   }
 
   Projectile(const Projectile& other)
-    : ProjectyleType(other.ProjectyleType)
-    , ProjectyleSpeed(other.ProjectyleSpeed)
+    : ProjectileType(other.ProjectileType)
+    , ProjectileSpeed(other.ProjectileSpeed)
     , ProjectileDamage(other.ProjectileDamage)
     , ProjectilePosition(other.ProjectilePosition)
   {
-    std::cout << "S-a copiat proiectilul " << this->ProjectyleType << '\n';
+    std::cout << "S-a copiat proiectilul " << this->ProjectileType << '\n';
   }
 
   Projectile& operator=(const Projectile& other)
   {
     if (this == &other)
       return *this;
-    ProjectyleType = other.ProjectyleType;
-    ProjectyleSpeed = other.ProjectyleSpeed;
+    ProjectileType = other.ProjectileType;
+    ProjectileSpeed = other.ProjectileSpeed;
     ProjectileDamage = other.ProjectileDamage;
     ProjectilePosition = other.ProjectilePosition;
     return *this;
@@ -93,8 +89,8 @@ public:
 
   friend std::ostream& operator<<(std::ostream& os, const Projectile& obj)
   {
-    return os << "ProjectyleType: " << obj.ProjectyleType
-              << "\nProjectyleSpeed: " << obj.ProjectyleSpeed
+    return os << "ProjectyleType: " << obj.ProjectileType
+              << "\nProjectyleSpeed: " << obj.ProjectileSpeed
               << "\nProjectileDamage: " << obj.ProjectileDamage
               << "\nProjectilePosition.x: " << obj.ProjectilePosition.x
               << "\nProjectilePosition.y: " << obj.ProjectilePosition.y << '\n';
@@ -278,40 +274,36 @@ Player::GetPos() const
 }
 
 
-class Enemy
-{
-private:
+class Enemy {
+  private:
   std::string EnemyName;
   short HealthPoints;
   short EnemyLevel;
   short EnemySpeed;
 
-public:
-  Enemy() = default;
+  public:
+  Enemy ( ) = default;
 
-  Enemy(const std::string& enemy_name,
-        short health_points,
-        short enemy_level,
-        short enemy_speed)
-    : EnemyName(enemy_name)
-    , HealthPoints(health_points)
-    , EnemyLevel(enemy_level)
-    , EnemySpeed(enemy_speed)
-  {
+  Enemy ( const std::string & enemy_name,
+          short health_points,
+          short enemy_level,
+          short enemy_speed )
+    : EnemyName ( enemy_name )
+    , HealthPoints ( health_points )
+    , EnemyLevel ( enemy_level )
+    , EnemySpeed ( enemy_speed ) {
     std::cout << "Inamicul " << this->EnemyName << " a fost creat\n";
   }
 
-  Enemy(const Enemy& other)
-    : EnemyName{ other.EnemyName }
-    , HealthPoints{ other.HealthPoints }
-    , EnemyLevel{ other.EnemyLevel }
-    , EnemySpeed{ other.EnemySpeed }
-  {
+  Enemy ( const Enemy & other )
+    : EnemyName { other.EnemyName }
+    , HealthPoints { other.HealthPoints }
+    , EnemyLevel { other.EnemyLevel }
+    , EnemySpeed { other.EnemySpeed } {
     std::cout << "S-a copiat inamicul " << this->EnemyName << '\n';
   }
 
-  Enemy& operator=(const Enemy& other)
-  {
+  Enemy & operator=( const Enemy & other ) {
     if (this == &other)
       return *this;
     EnemyName = other.EnemyName;
@@ -321,7 +313,7 @@ public:
     return *this;
   }
 
-  friend std::ostream& operator<<(std::ostream& os, const Enemy& obj) {
+  friend std::ostream & operator<<( std::ostream & os, const Enemy & obj ) {
     return os
       << "EnemyName: " << obj.EnemyName
       << "\nHealthPoints: " << obj.HealthPoints
@@ -329,107 +321,101 @@ public:
       << "\nEnemySpeed: " << obj.EnemySpeed;
   }
 
-  ~Enemy() { std::cout << "Inamic Distrus\n"; }
+  ~Enemy ( ) { std::cout << "Inamic Distrus\n"; }
 };
 
-class Menu
-{
-private:
+class Menu {
+  private:
   char state;
 
-public:
-  Menu() = default;
+  public:
+  Menu ( ) = default;
 
-  Menu(char state)
-    : state(state)
-  {
+  Menu ( char state )
+    : state ( state ) {
     std::cout << "S-a creat meniul " << this->state << '\n';
   }
 
-  friend std::ostream& operator<<(std::ostream& os, const Menu& obj)
-  {
+  friend std::ostream & operator<<( std::ostream & os, const Menu & obj ) {
     return os << "state: " << obj.state;
   }
 
-  static void RunApp(Player);
+  static void RunApp ( Player & );
 
-  ~Menu() { std::cout << "Gata cu fotosinteza, la culcare toata lumea!\n"; };
+  ~Menu ( ) { std::cout << "Gata cu fotosinteza, la culcare toata lumea!\n"; };
 };
 
 void
-Menu::RunApp(Player player)
-{
-  SetExitKey(KEY_NULL);
+Menu::RunApp ( Player & player ) {
+  SetExitKey ( KEY_NULL );
 
   bool ExitWindowRequested = false;
   bool ExitWindow = false;
 
-  InitWindow(ScreenWidth, ScreenHeight, "Project Asteroid");
-  SetTargetFPS(60);
-  HideCursor();
+  InitWindow ( ScreenWidth, ScreenHeight, "Project Asteroid" );
+  SetTargetFPS ( 60 );
+  HideCursor ( );
 
   while (!ExitWindow) {
-    if (WindowShouldClose() || IsKeyPressed(KEY_ESCAPE)) ExitWindowRequested = true;
+    if (WindowShouldClose ( ) || IsKeyPressed ( KEY_ESCAPE )) ExitWindowRequested = true;
 
     if (ExitWindowRequested) {
-      if (IsKeyPressed(KEY_Y))
+      if (IsKeyPressed ( KEY_Y ))
         ExitWindow = true;
-      if (IsKeyPressed(KEY_N))
+      if (IsKeyPressed ( KEY_N ))
         ExitWindowRequested = false;
     }
 
+    BeginDrawing ( );
 
-    BeginDrawing();
-    
-    
     if (ExitWindowRequested) {
-      DrawRectangle(
-        0, ScreenHeight / 3., ScreenWidth, ScreenHeight / 10., RAYWHITE);
-      DrawText("Are you sure you want to exit the game? [Y/N]",
-               ScreenWidth / 3.,
-               ScreenHeight * 9. / 24.,
-               ScreenHeight / 60.,
-               BLACK);
-    } else {
-      player.Update(); // apel catre functia de update pentru player
+      DrawRectangle (
+        0, ScreenHeight / 3., ScreenWidth, ScreenHeight / 10., RAYWHITE );
+      DrawText ( "Are you sure you want to exit the game? [Y/N]",
+                 ScreenWidth / 2,
+                 ScreenHeight * 9 / 24,
+                 30,
+                 BLACK );
+    }
+    else {
+      player.Update ( ); // apel catre functia de update pentru player
     }
 
-    
-    ClearBackground(BLACK);
 
-    EndDrawing();
+    ClearBackground ( BLACK );
+
+    EndDrawing ( );
   }
 
-  CloseWindow(); 
+  CloseWindow ( );
 }
 
 int
-main()
-{
+main ( ) {
 
-  Player p1("Gigel",
-            1,
-            5,
-            DefaultRotation,
-            { ScreenWidth / 2.f, ScreenHeight / 2.f },
-            ScreenWidth / 60.,
-            3);
+  Player p1 ( "Gigel",
+              1,
+              5,
+              DefaultRotation,
+              { ScreenWidth / 2.f, ScreenHeight / 2.f },
+              ScreenWidth / 60.,
+              3 );
 
   std::cout << p1;
 
-  Menu meniu(1);
+  Menu meniu ( 1 );
 
-  meniu.RunApp(p1);
+  Menu::RunApp ( p1 );
 
-  Player* p2 = &p1;
+  Player * p2 = &p1;
 
   std::cout << p2;
 
-  Enemy e1("Dorel", 10, 2, 100);
+  Enemy e1 ( "Dorel", 10, 2, 100 );
 
   std::cout << e1;
 
-  Projectile pr1(1, 10, 50, p1.GetPos());
+  Projectile pr1 ( 1, 10, 50, p1.GetPos ( ) );
   std::cout << pr1;
 }
 

@@ -75,4 +75,5 @@ copy_files(FILES tastatura.txt)
 # copy_files(FILES tastatura.txt config.json DIRECTORY images sounds)
 # copy_files(DIRECTORY images sounds)
 
-target_include_directories(${PROJECT_NAME} PRIVATE classes)
+target_include_directories(${PROJECT_NAME} PRIVATE src)
+
