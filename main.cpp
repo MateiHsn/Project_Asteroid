@@ -104,7 +104,7 @@ class Player
 private:
   std::string PlayerName;
   short PlayerLevel;
-  short PlayerLive;
+  short PlayerLives;
   float Rotation;
   Vector2 PlayerPosition;
   float Radius;
@@ -122,7 +122,7 @@ public:
          int sides)
     : PlayerName(player_name)
     , PlayerLevel(player_level)
-    , PlayerLive(player_live)
+    , PlayerLives(player_live)
     , Rotation(rotation)
     , PlayerPosition(player_position)
     , Radius(radius)
@@ -134,7 +134,7 @@ public:
   Player(const Player& other)
     : PlayerName{ other.PlayerName }
     , PlayerLevel{ other.PlayerLevel }
-    , PlayerLive{ other.PlayerLive }
+    , PlayerLives{ other.PlayerLives }
     , Rotation{ other.Rotation }
     , PlayerPosition{ other.PlayerPosition }
     , Radius{ other.Radius }
@@ -149,7 +149,7 @@ public:
       return *this;
     PlayerName = other.PlayerName;
     PlayerLevel = other.PlayerLevel;
-    PlayerLive = other.PlayerLive;
+    PlayerLives = other.PlayerLives;
     Rotation = other.Rotation;
     PlayerPosition = other.PlayerPosition;
     Radius = other.Radius;
@@ -161,7 +161,7 @@ public:
   {
     return os << "PlayerName: " << obj.PlayerName << '\n'
               << " PlayerLevel: " << obj.PlayerLevel << '\n'
-              << " PlayerLive: " << obj.PlayerLive << '\n'
+              << " PlayerLive: " << obj.PlayerLives << '\n'
               << " Rotation: " << obj.Rotation << '\n'
               << " PlayerPosition: " << obj.PlayerPosition.x << ' '
               << obj.PlayerPosition.y << '\n'

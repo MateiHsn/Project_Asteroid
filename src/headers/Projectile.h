@@ -9,13 +9,13 @@
 
 
 class Projectile {
-  private:
+private:
   char ProjectileType;
   char ProjectileSpeed;
   char ProjectileDamage;
   Vector2 ProjectilePosition;
 
-  public:
+public:
   Projectile ( );
   Projectile ( char projectile_type, char projectile_speed,
                char projectile_damage, const Vector2 & projectile_position )
@@ -39,6 +39,5 @@ class Projectile {
   }
 
 };
-
 
 #endif
