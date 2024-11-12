@@ -44,10 +44,16 @@ FetchContent_MakeAvailable(raylib)
 
 ###############################################################################
 
+#target_include_directories(src/headers)
+#target_include_directories(src/execs)
+
 # NOTE: update executable name in .github/workflows/cmake.yml:25 when changing name here
 add_executable(${PROJECT_NAME}
     main.cpp
     generated/src/Helper.cpp
+    #src/execs/Menu.cpp
+    #src/execs/Player.cpp
+    #src/execs/Projectile.cpp
 )
 
 include(cmake/CompilerFlags.cmake)
@@ -59,7 +65,7 @@ target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE generated/include)
 # target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ext/<SomeHppLib>/include)
 # target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ${<SomeLib>_SOURCE_DIR}/include)
 # target_link_directories(${PROJECT_NAME} PRIVATE ${<SomeLib>_BINARY_DIR}/lib)
- target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
+target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
 
 ###############################################################################
 
@@ -74,6 +80,4 @@ include(cmake/CopyHelper.cmake)
 copy_files(FILES tastatura.txt)
 # copy_files(FILES tastatura.txt config.json DIRECTORY images sounds)
 # copy_files(DIRECTORY images sounds)
-
-target_include_directories(${PROJECT_NAME} PRIVATE src)
 

@@ -1,5 +1,3 @@
-
-
 #include <headers/Menu.h>
 
 static void Menu::RunApp(Player& player) {

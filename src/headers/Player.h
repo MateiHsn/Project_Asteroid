@@ -5,10 +5,6 @@
 #include <raylib.h>
 #endif // !RAYLIB_H
 
-#ifndef OOP_PROJECTILE_H
-#include <Projectile.h>
-#endif // !OOP_PROJECTILE_H
-
 class Player {
 private:
   std::string PlayerName;
@@ -51,7 +47,8 @@ public:
     std::cout << "A fost copiat " << PlayerName << "\n";
   }
 
-
+  void GetRotation ( )const;
+  void GetPos ( )const;
 
 };
 

@@ -14,15 +14,17 @@ private:
   char ProjectileSpeed;
   char ProjectileDamage;
   Vector2 ProjectilePosition;
-
+  float Rotation;
 public:
   Projectile ( );
   Projectile ( char projectile_type, char projectile_speed,
-               char projectile_damage, const Vector2 & projectile_position )
+               char projectile_damage, const Vector2 & projectile_position,
+               float rotation )
     : ProjectileType ( projectile_type ),
     ProjectileSpeed ( projectile_speed ),
     ProjectileDamage ( projectile_damage ),
-    ProjectilePosition ( projectile_position ) {
+    ProjectilePosition ( projectile_position ),
+    Rotation ( rotation ) {
     std::cout << "S-a lansat proiectilul" << this->ProjectileType << '\n';
   }
 
@@ -37,6 +39,9 @@ public:
   ~Projectile ( ) {
     std::cout << "Proiectilul " << this->ProjectileType << " a nimerit\n";
   }
+
+  void Update ( );
+  void Draw ( );
 
 };
 
