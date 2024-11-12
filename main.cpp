@@ -1,9 +1,7 @@
 #include <iostream>
-#include <ostream>
 #include <raylib.h>
-#include <raymath.h>
+// #include <raymath.h>
 #include <cmath>
-#include <mutex>
 
 static float ScreenWidth = 1280;
 static float ScreenHeight = 720;
@@ -38,7 +36,6 @@ class DefaultParameters {
     , Multiplier ( Multiplier ) { }
 
   DefaultParameters ( const DefaultParameters & obj ) = delete;
-
 
 };
 
