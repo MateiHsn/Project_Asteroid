@@ -181,15 +181,15 @@ Player::Update ( ) {
 
   if ( IsKeyDown ( KEY_UP ) ) {
     this->PlayerPosition.x +=
-      cos ( ( this->Rotation - 90 ) * DEG2RAD ) * 2 * Multiplier;
+      cos ( ( this->Rotation - 90 ) * DEG2RAD ) * 2.5 * Multiplier;
     this->PlayerPosition.y +=
-      sin ( ( this->Rotation - 90 ) * DEG2RAD ) * 2 * Multiplier;
+      sin ( ( this->Rotation - 90 ) * DEG2RAD ) * 2.5 * Multiplier;
   }
   if ( IsKeyDown ( KEY_DOWN ) ) {
     this->PlayerPosition.x -=
-      cos ( ( this->Rotation - 90 ) * DEG2RAD ) * 2 * Multiplier;
+      cos ( ( this->Rotation - 90 ) * DEG2RAD ) * 2.5 * Multiplier;
     this->PlayerPosition.y -=
-      sin ( ( this->Rotation - 90 ) * DEG2RAD ) * 2 * Multiplier;
+      sin ( ( this->Rotation - 90 ) * DEG2RAD ) * 2.5 * Multiplier;
 
     if ( IsKeyDown ( KEY_RIGHT ) ) {
       this->Rotation -= 2.5 * Multiplier;
