@@ -2,11 +2,10 @@
 #include <raylib.h>
 // #include <raymath.h>
 #include <cmath>
-#include <vector>
+// #include <vector>
 
-static float ScreenWidth = 1600;
-static float ScreenHeight = 1000;
-static float DefaultRotation = 30;
+static int ScreenWidth = 1600;
+static int ScreenHeight = 1000;
 
 // Implicit, sprite-ul face un unghi de 30 de grade
 // cu verticala
@@ -88,7 +87,7 @@ private:
   std::string PlayerName;
   short PlayerLevel;
   short PlayerLives;
-  float Rotation;
+  int Rotation;
   Vector2 PlayerPosition;
   float Radius;
   int Sides;
@@ -99,7 +98,7 @@ public:
   Player ( const std::string & player_name,
            short player_level,
            short player_live,
-           float rotation,
+           int rotation,
            const Vector2 & player_position,
            float radius,
            int sides )
@@ -163,10 +162,10 @@ public:
 void
 Player::Draw ( ) const {
   DrawPolyLinesEx (
-    this->PlayerPosition, this->Sides, this->Radius, this->Rotation, 2, RED );
+    this->PlayerPosition, this->Sides, this->Radius, this->Rotation + 30, 2, RED );
   DrawLineV ( this->PlayerPosition,
-              { this->PlayerPosition.x + static_cast<float>( ScreenWidth / 40. ) * cos ( ( Rotation - 120 ) * DEG2RAD ),
-                 this->PlayerPosition.y + static_cast<float>( ScreenWidth / 40. ) * sin ( ( Rotation - 120 ) * DEG2RAD ) },
+              { this->PlayerPosition.x + static_cast< float >( ScreenWidth / 40. ) * cos ( ( Rotation - 90 ) * DEG2RAD ),
+                 this->PlayerPosition.y + static_cast< float >( ScreenWidth / 40. ) * sin ( ( Rotation - 90 ) * DEG2RAD ) },
               WHITE );
 }
 
@@ -182,15 +181,15 @@ Player::Update ( ) {
 
   if ( IsKeyDown ( KEY_UP ) ) {
     this->PlayerPosition.x +=
-      cos ( ( this->Rotation - 120 ) * DEG2RAD ) * 2 * Multiplier;
+      cos ( ( this->Rotation - 90 ) * DEG2RAD ) * 2 * Multiplier;
     this->PlayerPosition.y +=
-      sin ( ( this->Rotation - 120 ) * DEG2RAD ) * 2 * Multiplier;
+      sin ( ( this->Rotation - 90 ) * DEG2RAD ) * 2 * Multiplier;
   }
   if ( IsKeyDown ( KEY_DOWN ) ) {
     this->PlayerPosition.x -=
-      cos ( ( this->Rotation - 120 ) * DEG2RAD ) * 2 * Multiplier;
+      cos ( ( this->Rotation - 90 ) * DEG2RAD ) * 2 * Multiplier;
     this->PlayerPosition.y -=
-      sin ( ( this->Rotation - 120 ) * DEG2RAD ) * 2 * Multiplier;
+      sin ( ( this->Rotation - 90 ) * DEG2RAD ) * 2 * Multiplier;
 
     if ( IsKeyDown ( KEY_RIGHT ) ) {
       this->Rotation -= 2.5 * Multiplier;
@@ -210,6 +209,12 @@ Player::Update ( ) {
       this->Rotation -= 2.5 * Multiplier;
     }
   }
+
+  if ( this->Rotation >= 360 )
+    this->Rotation -= 360;
+
+  if ( this->Rotation <= -360 )
+    this->Rotation += 360;
 
   if ( IsKeyPressed ( KEY_ENTER ) || IsKeyPressed ( KEY_SPACE ) ) {
     Projectile p1 ( 1, 10, 10, this->PlayerPosition );
@@ -233,13 +238,14 @@ Player::Update ( ) {
     this->PlayerPosition.y = ScreenHeight - Radius / 2.;
 
   this->Draw ( );
+
   this->ShowPos ( );
 }
 
 void
 Player::ShowPos ( ) const {
   std::cout << "Pozitie: " << this->PlayerPosition.x << ' '
-    << this->PlayerPosition.y << '\tRotatie' << this->Rotation << '\n';
+    << this->PlayerPosition.y << "   Rotatie" << this->Rotation << '\n';
 }
 
 Vector2
@@ -368,7 +374,7 @@ main ( ) {
   Player p1 ( "Gigel",
               1,
               5,
-              DefaultRotation,
+              0,
               { ScreenWidth / 2.f, ScreenHeight / 2.f },
               ScreenWidth / 60.,
               3 );
