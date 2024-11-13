@@ -217,7 +217,7 @@ Player::Update ( ) {
     this->Rotation += 360;
 
   if ( IsKeyPressed ( KEY_ENTER ) || IsKeyPressed ( KEY_SPACE ) ) {
-    Projectile p1 ( 1, 10, 10, this->PlayerPosition );
+    // Projectile p1 ( 1, 10, 10, this->PlayerPosition );
     std::cout << "\n--Trage--\n";
   }
 
@@ -236,8 +236,6 @@ Player::Update ( ) {
 
   if ( this->PlayerPosition.y > ScreenHeight - Radius / 2. )
     this->PlayerPosition.y = ScreenHeight - Radius / 2.;
-
-  this->Draw ( );
 
   this->ShowPos ( );
 }
@@ -332,10 +330,15 @@ Menu::RunApp ( Player & player ) {
   bool ExitWindow = false;
 
   InitWindow ( ScreenWidth, ScreenHeight, "Project Asteroid" );
-  SetTargetFPS ( 60 );
-  HideCursor ( );
+  SetTargetFPS ( 90 ); // am pus 90 deoarece display-ul meu e pe 90Hz :P
+  HideCursor ( ); // inca nu am implementat meniul propriu-zis ca sa am nevoie de un cursor
+  // cursorul o sa fie un sprite (nu-l voi lasa pe cel default)
+
+  //tot ce e descris in while 
 
   while ( !ExitWindow ) {
+
+
     if ( WindowShouldClose ( ) || IsKeyPressed ( KEY_ESCAPE ) ) ExitWindowRequested = true;
 
     if ( ExitWindowRequested ) {
@@ -356,14 +359,15 @@ Menu::RunApp ( Player & player ) {
                  30,
                  BLACK ); 
     } else {
+      ClearBackground ( BLACK );
+      BeginDrawing ( );
       player.Update ( ); // apel catre functia de update pentru player
+      player.Draw ( ); // apel metoda 
+      EndDrawing ( );
     }
 
 
-    ClearBackground ( BLACK );
-
-    EndDrawing ( );
-  }
+    }
 
   CloseWindow ( );
 }
