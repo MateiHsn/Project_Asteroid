@@ -44,13 +44,11 @@ FetchContent_MakeAvailable(raylib)
 
 ###############################################################################
 
+
 # NOTE: update executable name in .github/workflows/cmake.yml:25 when changing name here
 add_executable(${PROJECT_NAME}
     main.cpp
     generated/src/Helper.cpp
-    src/execs/Menu.cpp
-    src/execs/Player.cpp
-    src/execs/Projectile.cpp
 )
 
 include(cmake/CompilerFlags.cmake)

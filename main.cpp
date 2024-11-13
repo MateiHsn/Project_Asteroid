@@ -2,7 +2,7 @@
 #include <raylib.h>
 // #include <raymath.h>
 #include <cmath>
-// #include <vector>
+#include <vector>
 
 static float ScreenWidth = 1600;
 static float ScreenHeight = 1000;
@@ -172,27 +172,19 @@ Player::Draw ( ) const {
 
 void
 Player::Update ( ) {
+
   bool rotated = false; // cand playerul se misca inainte sau inapoi, daca nu se
                     // previne intrarea
   // in ultima pereche de checkuri pentru rotatie, aceasta se va face de 2 ori
-  // deci jucatorul se va roti de 2 ori mai mult daca se misca inainte-inapoi
+  // deci jucatorul se va roti de 2 ori mai mult daca se misca inainte sau inapoi
   // (ar merge lasat feature si nu bug???? hmmmmm...)
-  // de aia exista bool-ul asta
+  // de aia exista bool-ul de mai sus
+
   if ( IsKeyDown ( KEY_UP ) ) {
     this->PlayerPosition.x +=
       cos ( ( this->Rotation - 120 ) * DEG2RAD ) * 2 * Multiplier;
     this->PlayerPosition.y +=
       sin ( ( this->Rotation - 120 ) * DEG2RAD ) * 2 * Multiplier;
-    /*
-    if (IsKeyDown(KEY_RIGHT)) {
-      this->Rotation += 2 * Multiplier;
-      rotated = true;
-    }
-    if (IsKeyDown(KEY_LEFT)) {
-      this->Rotation -= 2 * Multiplier;
-      rotated = true;
-    }
-    */
   }
   if ( IsKeyDown ( KEY_DOWN ) ) {
     this->PlayerPosition.x -=
@@ -221,7 +213,7 @@ Player::Update ( ) {
 
   if ( IsKeyPressed ( KEY_ENTER ) || IsKeyPressed ( KEY_SPACE ) ) {
     Projectile p1 ( 1, 10, 10, this->PlayerPosition );
-    std::cout << "\n\n\n--Trage--\n\n\n";
+    std::cout << "\n--Trage--\n";
   }
 
   // pentru ca jucatorul sa nu iasa din fereastra
@@ -247,7 +239,7 @@ Player::Update ( ) {
 void
 Player::ShowPos ( ) const {
   std::cout << "Pozitie: " << this->PlayerPosition.x << ' '
-    << this->PlayerPosition.y << '\n';
+    << this->PlayerPosition.y << '\tRotatie' << this->Rotation << '\n';
 }
 
 Vector2
