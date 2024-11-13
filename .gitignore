@@ -710,10 +710,7 @@ FodyWeavers.xsd
 
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
-
-# Raylib repo link
-https://github.com/raysan5/raylib.git
-
+  
 # End of https://www.toptal.com/developers/gitignore/api/c++,clion,cmake,codeblocks,emacs,gcov,sublimetext,vim,visualstudio,visualstudiocode,xcode
 
 

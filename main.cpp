@@ -165,9 +165,9 @@ Player::Draw ( ) const {
   DrawPolyLinesEx (
     this->PlayerPosition, this->Sides, this->Radius, this->Rotation, 2, RED );
   DrawLineV ( this->PlayerPosition,
-              { this->PlayerPosition.x + static_cast<float>( ScreenWidth / 30. ) * cos ( ( Rotation - 120 ) * DEG2RAD ),
-                 this->PlayerPosition.y + static_cast<float>( ScreenWidth / 30. ) * sin ( ( Rotation - 120 ) * DEG2RAD ) },
-              RED );
+              { this->PlayerPosition.x + static_cast<float>( ScreenWidth / 40. ) * cos ( ( Rotation - 120 ) * DEG2RAD ),
+                 this->PlayerPosition.y + static_cast<float>( ScreenWidth / 40. ) * sin ( ( Rotation - 120 ) * DEG2RAD ) },
+              WHITE );
 }
 
 void
