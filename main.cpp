@@ -1,5 +1,7 @@
 #include <iostream>
 #include <raylib.h>
+#include <string>
+#include <iosfwd>
 // #include <raymath.h>
 #include <cmath>
 // #include <vector>
@@ -71,7 +73,7 @@ public:
     return *this;
   }
 
-  friend std::ostream & operator<<( std::ostream & os, const Projectile & obj ) {
+  static friend std::ostream & operator<<( std::ostream & os, const Projectile & obj ) {
     return os << "ProjectyleType: " << obj.ProjectileType
       << "\nProjectyleSpeed: " << obj.ProjectileSpeed
       << "\nProjectileDamage: " << obj.ProjectileDamage
@@ -136,7 +138,7 @@ public:
     return *this;
   }
 
-  friend std::ostream & operator<<( std::ostream & os, const Player & obj ) {
+  static friend std::ostream & operator<<( std::ostream & os, const Player & obj ) {
     return os << "PlayerName: " << obj.PlayerName << '\n'
       << " PlayerLevel: " << obj.PlayerLevel << '\n'
       << " PlayerLive: " << obj.PlayerLives << '\n'
@@ -290,7 +292,7 @@ public:
     return *this;
   }
 
-  friend std::ostream & operator<<( std::ostream & os, const Enemy & obj ) {
+  static friend std::ostream & operator<<( std::ostream & os, const Enemy & obj ) {
     return os
       << "EnemyName: " << obj.EnemyName
       << "\nHealthPoints: " << obj.HealthPoints
@@ -313,7 +315,7 @@ public:
     std::cout << "S-a creat meniul " << this->state << '\n';
   }
 
-  friend std::ostream & operator<<( std::ostream & os, const Menu & obj ) {
+  static friend std::ostream & operator<<( std::ostream & os, const Menu & obj ) {
     return os << "state: " << obj.state;
   }
 
@@ -334,7 +336,7 @@ Menu::RunApp ( Player & player ) {
   HideCursor ( ); // inca nu am implementat meniul propriu-zis ca sa am nevoie de un cursor
   // cursorul o sa fie un sprite (nu-l voi lasa pe cel default)
 
-  //tot ce e descris in while
+  // tot ce e descris in while
   // defineste felul in care este manipulata iesirea din fereastra/joc
 
   while ( !ExitWindow ) {
