@@ -334,11 +334,11 @@ Menu::RunApp ( Player & player ) {
   HideCursor ( ); // inca nu am implementat meniul propriu-zis ca sa am nevoie de un cursor
   // cursorul o sa fie un sprite (nu-l voi lasa pe cel default)
 
-  //tot ce e descris in while 
+  //tot ce e descris in while
+  // defineste felul in care este manipulata iesirea din fereastra/joc
 
   while ( !ExitWindow ) {
-
-
+    BeginDrawing ( );
     if ( WindowShouldClose ( ) || IsKeyPressed ( KEY_ESCAPE ) ) ExitWindowRequested = true;
 
     if ( ExitWindowRequested ) {
@@ -360,12 +360,10 @@ Menu::RunApp ( Player & player ) {
                  BLACK );
     } else {
       ClearBackground ( BLACK );
-      BeginDrawing ( );
       player.Update ( ); // apel catre functia de update pentru player
       player.Draw ( ); // apel metoda 
-      EndDrawing ( );
     }
-
+    EndDrawing ( );
 
   }
 
