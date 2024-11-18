@@ -1,6 +1,6 @@
-#include <headers/Menu.h>
+#include "../headers/Menu.h"
 
-static void Menu::RunApp(Player& player) {
+void Menu::RunApp(Player& player) {
   SetExitKey(KEY_NULL);
 
   bool ExitWindowRequested = false;
@@ -23,7 +23,7 @@ static void Menu::RunApp(Player& player) {
     if (ExitWindowRequested) {
       DrawRectangle(0, GetScreenHeight() / 3, GetScreenWidth(),
                     GetScreenHeight() / 3, WHITE);
-      std::string ExitMessage = "Exit the game??? [Y/N]";
+      char ExitMessage[] = "Exit the game??? [Y/N]";
       DrawText("Exit the game??? [Y/N]",
                GetScreenWidth() / 2 + MeasureText(ExitMessage, 30) / 2,
                GetScreenHeight() / 2, 30, BLACK);

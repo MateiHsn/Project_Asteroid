@@ -1,19 +1,19 @@
-#ifndef OOP_PLAYER_H
-#define OOP_PLAYER_H
+#pragma once
 
 #ifndef RAYLIB_H
 #include <raylib.h>
 #endif // !RAYLIB_H
+#include <iostream>
 
 class Player {
 private:
   std::string PlayerName;
   short PlayerLevel;
   short PlayerLives;
-  float Rotation;
+  int Rotation;
   Vector2 PlayerPosition;
   float Radius;
-  int sides;
+  int Sides;
 
 public:
   Player ( ) = default;
@@ -47,9 +47,8 @@ public:
     std::cout << "A fost copiat " << PlayerName << "\n";
   }
 
-  void GetRotation ( )const;
-  void GetPos ( )const;
-
+  int GetRotation ( )const;
+  Vector2 GetPos ( )const;
+  void Update ( );
 };
 
-#endif

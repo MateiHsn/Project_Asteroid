@@ -49,6 +49,9 @@ FetchContent_MakeAvailable(raylib)
 add_executable(${PROJECT_NAME}
     main.cpp
     generated/src/Helper.cpp
+    #src/Menu.cpp
+    #src/Player.cpp
+    #src/Projectile.cpp
 )
 
 include(cmake/CompilerFlags.cmake)

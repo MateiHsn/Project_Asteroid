@@ -357,7 +357,7 @@ Menu::RunApp ( Player & player ) {
                  ScreenWidth / 2 - MeasureText ( "Are you sure you want to exit the game? [Y/N]", 30 ) / 2,
                  ScreenHeight * 9 / 24,
                  30,
-                 BLACK ); 
+                 BLACK );
     } else {
       ClearBackground ( BLACK );
       BeginDrawing ( );
@@ -367,7 +367,7 @@ Menu::RunApp ( Player & player ) {
     }
 
 
-    }
+  }
 
   CloseWindow ( );
 }

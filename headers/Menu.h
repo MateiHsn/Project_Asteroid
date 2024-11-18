@@ -1,8 +1,5 @@
-#ifndef OOP_MENU_H
-#define OOP_MENU_H
+#pragma once
 
-#include <>
-#include <raylib.h>
 #include <iostream>
 
 class Menu {
@@ -25,4 +22,3 @@ class Menu {
   ~Menu() { std::cout << "Gata cu fotosinteza, la culcare toate lumea\n"; }
 };
 
-#endif

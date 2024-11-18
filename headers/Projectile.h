@@ -1,12 +1,10 @@
-#ifndef OOP_PROJECTILE_H
-#define OOP_PROJECTILE_H
+#pragma once
 
 #ifndef RAYLIB_H
 #include <raylib.h>
 #endif 
 
 #include <iostream>
-
 
 class Projectile {
 private:
@@ -45,4 +43,3 @@ public:
 
 };
 
-#endif
