@@ -330,7 +330,6 @@ Menu::RunApp ( Player & player ) {
 
   bool ExitWindowRequested = false;
   bool ExitWindow = false;
-
   InitWindow ( ScreenWidth, ScreenHeight, "Project Asteroid" );
   SetTargetFPS ( 90 ); // am pus 90 deoarece display-ul meu e pe 90Hz :P
   HideCursor ( ); // inca nu am implementat meniul propriu-zis ca sa am nevoie de un cursor
@@ -353,10 +352,11 @@ Menu::RunApp ( Player & player ) {
     BeginDrawing ( );
 
     if ( ExitWindowRequested ) {
+      const char *ExitMessage = "Are you sure you want to exit the game? [Y/N]";
       DrawRectangle (
         0, ScreenHeight / 3., ScreenWidth, ScreenHeight / 10., RAYWHITE );
-      DrawText ( "Are you sure you want to exit the game? [Y/N]",
-                 ScreenWidth / 2 - MeasureText ( "Are you sure you want to exit the game? [Y/N]", 30 ) / 2,
+      DrawText ( ExitMessage,
+                 ScreenWidth / 2 - MeasureText ( ExitMessage, 30 ) / 2,
                  ScreenHeight * 9 / 24,
                  30,
                  BLACK );
