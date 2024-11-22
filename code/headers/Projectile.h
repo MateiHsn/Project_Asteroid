@@ -1,8 +1,6 @@
 #pragma once
 
-#ifndef RAYLIB_H
-#include <raylib.h>
-#endif 
+#include "./Entity.h"
 
 #include <iostream>
 
@@ -11,13 +9,11 @@ private:
   char ProjectileType;
   char ProjectileSpeed;
   char ProjectileDamage;
-  Vector2 ProjectilePosition;
-  float Rotation;
 public:
   Projectile ( );
   Projectile ( char projectile_type, char projectile_speed,
                char projectile_damage, const Vector2 & projectile_position,
-               float rotation )
+               int rotation )
     : ProjectileType ( projectile_type ),
     ProjectileSpeed ( projectile_speed ),
     ProjectileDamage ( projectile_damage ),
