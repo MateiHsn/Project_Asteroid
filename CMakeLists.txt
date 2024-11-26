@@ -11,28 +11,25 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-include(cmake/Options.cmake)
+include(cmake/Options.cmake) 
+
 ###############################################################################
 
 # external dependencies with FetchContent
-#########################################
 include(FetchContent)
 #
- set(FETCHCONTENT_QUIET OFF)
- set(FETCHCONTENT_UPDATES_DISCONNECTED ON)
+#set(FETCHCONTENT_QUIET OFF)
+#set(FETCHCONTENT_UPDATES_DISCONNECTED ON)
 #
 # NOTE: Also update env vars used for caching in
 #         - .github/actions/configure-cmake/action.yml
 #         - .github/workflows/cmake.yml
 FetchContent_Declare(
-        raylib
-        GIT_REPOSITORY https://github.com/raysan5/raylib.git
-        GIT_TAG "master"
-        GIT_PROGRESS TRUE
+         raylib
+         GIT_REPOSITORY https://github.com/raysan5/raylib.git
+         GIT_TAG        "master" # <which tag/branch @ <some_date>>
+         GIT_SHALLOW    TRUE  # works only with branches or tags, not with arbitrary commit hashes
 )
-#         GIT_TAG        <some_git_hash> # <which tag/branch @ <some_date>>
-#         GIT_SHALLOW    1  # works only with branches or tags, not with arbitrary commit hashes
-# )
 #
 FetchContent_MakeAvailable(raylib)
 
@@ -44,14 +41,18 @@ FetchContent_MakeAvailable(raylib)
 
 ###############################################################################
 
-
 # NOTE: update executable name in .github/workflows/cmake.yml:25 when changing name here
 add_executable(${PROJECT_NAME}
     main.cpp
     generated/src/Helper.cpp
-    #src/Menu.cpp
-    #src/Player.cpp
-    #src/Projectile.cpp
+    code/headers/DefaultParameters.hpp
+    code/src/DefaultParameters.cpp
+    code/headers/Entity.hpp
+    code/src/Entity.cpp
+    code/headers/Menu.hpp
+    code/src/Menu.cpp
+    code/headers/Projectile.hpp
+    code/src/Projectile.cpp
 )
 
 include(cmake/CompilerFlags.cmake)
@@ -63,7 +64,7 @@ target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE generated/include)
 # target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ext/<SomeHppLib>/include)
 # target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ${<SomeLib>_SOURCE_DIR}/include)
 # target_link_directories(${PROJECT_NAME} PRIVATE ${<SomeLib>_BINARY_DIR}/lib)
-target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
+ target_link_libraries(${PROJECT_NAME} raylib)
 
 ###############################################################################
 

@@ -1,35 +1,60 @@
-#include "../headers/Menu.h"
+#include "../headers/Menu.hpp"
+#include "../headers/Player.hpp"
+#include "../headers/DefaultParameters.hpp"
+#include "Player.cpp"
+#include "raylib.h"
 
-void Menu::RunApp(Player& player) {
-  SetExitKey(KEY_NULL);
 
-  bool ExitWindowRequested = false;
-  bool ExitWindow = false;
+void Menu::RunApp ( Player *& player ) {
 
-  InitWindow(1920, 1080, "Project Asteroid");
-  SetTargetFPS(60);
-  HideCursor();
+  SetExitKey ( KEY_NULL );
 
-  while (!ExitWindow) {
-    if (!WindowShouldClose() || IsKeyPressed(KEY_ESCAPE))
-      ExitWindowRequested = true;
+  InitWindow ( DefaultParameters::get_instance ( )->get_width ( ),
+               DefaultParameters::get_instance ( )->get_height ( ),
+               "Project Asteroid" );
 
-    if (ExitWindowRequested) {
-      if (IsKeyPressed(KEY_Y)) ExitWindow = true;
-      if (IsKeyPressed(KEY_N)) ExitWindowRequested = false;
-    }
+  SetTargetFPS ( 60 );
 
-    BeginDrawing();
-    if (ExitWindowRequested) {
-      DrawRectangle(0, GetScreenHeight() / 3, GetScreenWidth(),
-                    GetScreenHeight() / 3, WHITE);
-      char ExitMessage[] = "Exit the game??? [Y/N]";
-      DrawText("Exit the game??? [Y/N]",
-               GetScreenWidth() / 2 + MeasureText(ExitMessage, 30) / 2,
-               GetScreenHeight() / 2, 30, BLACK);
+  bool exit_window = false;
+  bool request_exit_window = false;
+
+  while ( !exit_window ) {
+
+    if ( WindowShouldClose ( ) || IsKeyPressed ( KEY_ESCAPE ) ) request_exit_window = true;
+
+    BeginDrawing ( );
+
+    ClearBackground ( BLACK );
+
+    if ( request_exit_window ) {
+      DrawRectangle ( 0,
+                      DefaultParameters::get_instance ( )->get_height ( ) / 3,
+                      DefaultParameters::get_instance ( )->get_width ( ),
+                      DefaultParameters::get_instance ( )->get_height ( ) / 3,
+                      WHITE );
+      constexpr char exit_message [ ] = "Exit the game? [Y/N]";
+      DrawText ( exit_message,
+                 DefaultParameters::get_instance ( )->get_width ( ) / 2 - MeasureText ( exit_message, DefaultParameters::get_instance ( )->get_width ( ) / 40 )/2,
+                 DefaultParameters::get_instance ( )->get_height ( ) / 2,
+                 DefaultParameters::get_instance ( )->get_width ( ) / 40,
+                 BLACK );
+
+      if(IsKeyPressed(KEY_Y) ) {
+        exit_window = true;
+        continue;
+      }
+      if(IsKeyPressed(KEY_N)) {
+        request_exit_window = false;
+        continue;
+      }
+
+
     } else {
-      player.Update();
+      player->Update ( );
+      player->Draw ( );
     }
-  }
-}
+    EndDrawing ( );
 
+  }
+
+}

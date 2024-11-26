@@ -4,19 +4,26 @@
 
 class DefaultParameters {
 private:
-  const int screen_width;
-  const int screen_height;
-  const float multiplier;
+  int screen_width;
+  int screen_height;
+  float multiplier;
+
+  static DefaultParameters * def_parameters;
 
   DefaultParameters ( ) = default;
   ~DefaultParameters ( ) = default;
 
-  static DefaultParameters * DefPars;
 
 public:
-  static DefaultParameters & get_instance ( )const;
+
+  static DefaultParameters * & get_instance();
 
   static void set_window_dimensions ( int, int );
+  static void set_mul ( float );
+  static int get_width ( );
+  static int get_height ( );
+  static float get_mul ( );
+
   DefaultParameters ( const DefaultParameters & ) = delete;
   DefaultParameters & operator = ( const DefaultParameters & ) = delete;
 

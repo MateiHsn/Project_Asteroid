@@ -4,6 +4,9 @@
 #include <raylib.h>
 #endif // !RAYLIB_H
 
+#include "DefaultParameters.hpp"
+
+#include "Player.hpp"
 
 #include <iostream>
 
@@ -22,7 +25,7 @@ class Menu {
     return out << "State: " << obj.state;
   }
 
-  static void RunApp(Player&);
+  static void RunApp(Player* &);
 
   ~Menu() { std::cout << "Gata cu fotosinteza, la culcare toate lumea\n"; }
 };

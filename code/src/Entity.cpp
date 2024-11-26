@@ -1,4 +1,2 @@
-#include "../headers/Entity.h"
+#include "../headers/Entity.hpp"
 
-Vector2 Entity::GetPos ( ) { }
-int Entity::GetRotation ( ) { }
