@@ -1,7 +1,7 @@
 # Project Asteroid
 
 ## Descriere proiect
-Acest repo va conține codul necesar pt proiectul laboratorului de OOP. (urmează ca această rubrică sa finalizată completată mai târziu)
+Acest repo conține codul sursă pentru jocul Project Asteroid, ce are la bază Asteroid, lansat de Atari în 1979. Această variantă de joc va prezenta, pe lângă o perspectivă top-down față de un bird-eye, câteva posibile funcții moderne cum ar fi salvarea progresului, un mod de campanie, pe lângă unu infinit (allegedly) și posibil multe altele dacă voi continua să lucrez la ea.
 
 ## Milestone #0
 
@@ -28,7 +28,7 @@ Acest repo va conține codul necesar pt proiectul laboratorului de OOP. (urmeaz�
 ## Milestone #2
 
 #### Cerințe
-- [ ] separarea codului din clase în `.h` (sau `.hpp`) și `.cpp`
+- [x] separarea codului din clase în `.h` (sau `.hpp`) și `.cpp`
 - [ ] moșteniri:
   - minim o clasă de bază și **3 clase derivate** din aceeași ierarhie
   - ierarhia trebuie să fie cu bază proprie, nu derivată dintr-o clasă predefinită
@@ -45,10 +45,10 @@ Acest repo va conține codul necesar pt proiectul laboratorului de OOP. (urmeaz�
   - [ ] ierarhie proprie cu baza `std::exception` sau derivată din `std::exception`; minim **3** clase pentru erori specifice
   - [ ] utilizare cu sens: de exemplu, `throw` în constructor (sau funcție care întoarce un obiect), `try`/`catch` în `main`
   - această ierarhie va fi complet independentă de ierarhia cu funcții virtuale
-- [ ] funcții și atribute `static`
-- [ ] STL
-- [ ] cât mai multe `const`
-- [ ] funcții *de nivel înalt*, de eliminat cât mai mulți getters/setters/funcții low-level
+- [x] funcții și atribute `static`
+- [x] STL
+- [x] cât mai multe `const`
+- [x] funcții *de nivel înalt*, de eliminat cât mai mulți getters/setters/funcții low-level
 - [ ] tag de `git`: de exemplu `v0.2`
 
 ## Milestone #3
