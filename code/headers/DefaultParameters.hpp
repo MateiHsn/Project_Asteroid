@@ -1,32 +1,40 @@
 #pragma once
 
-#include <iostream>
+///@brief
+///Singleton pattern-based class that ensures the encapsulation of the screen's height and width and the game's multiplier.
+///The singleton design pattern is used to ensure that the dimensions are safely stored in only one instance of the class.
+///
 
 class DefaultParameters {
 private:
-  int screen_width;
-  int screen_height;
-  float multiplier;
+  int ScreenWidth;
+  int ScreenHeight;
+  float Multiplier;
 
-  static DefaultParameters * def_parameters;
+  /// 
+  /// @brief Pointer to the singleton class pointer
+  /// that designates the screen's width and height
+  /// and the game's overall multiplier.
+  /// 
+
+  static DefaultParameters * DefParams;
 
   DefaultParameters ( ) = default;
   ~DefaultParameters ( ) = default;
 
-
 public:
 
-  static DefaultParameters * & get_instance();
+  static DefaultParameters* & GetInstance();
 
-  static void set_window_dimensions ( int, int );
-  static void set_mul ( float );
-  static int get_width ( );
-  static int get_height ( );
-  static float get_mul ( );
+  static void SetRenderDimensions ( int, int );
+  static void SetMultiplier ( float );
+  static float GetMultiplier ( );
+  static int GetRenderWidth ( );
+  static int GetRenderHeight ( );
 
   DefaultParameters ( const DefaultParameters & ) = delete;
   DefaultParameters & operator = ( const DefaultParameters & ) = delete;
 
 };
 
-enum MenuStates { MENU, SETTINGS, PLAYING, PAUSE };
+enum MenuStates { MENU, PLAYING, PAUSE, SETTINGS, EXIT};

@@ -18,8 +18,8 @@ include(cmake/Options.cmake)
 # external dependencies with FetchContent
 include(FetchContent)
 #
-#set(FETCHCONTENT_QUIET OFF)
-#set(FETCHCONTENT_UPDATES_DISCONNECTED ON)
+set(FETCHCONTENT_QUIET OFF)
+set(FETCHCONTENT_UPDATES_DISCONNECTED ON)
 #
 # NOTE: Also update env vars used for caching in
 #         - .github/actions/configure-cmake/action.yml
@@ -44,7 +44,7 @@ FetchContent_MakeAvailable(raylib)
 # NOTE: update executable name in .github/workflows/cmake.yml:25 when changing name here
 add_executable(${PROJECT_NAME}
     main.cpp
-    generated/src/Helper.cpp
+    #generated/src/Helper.cpp
     code/headers/DefaultParameters.hpp
     code/src/DefaultParameters.cpp
     code/headers/Entity.hpp
@@ -53,6 +53,17 @@ add_executable(${PROJECT_NAME}
     code/src/Menu.cpp
     code/headers/Projectile.hpp
     code/src/Projectile.cpp
+    #code/headers/Enemy.hpp
+    #code/src/Enemy.cpp
+    code/headers/CollisionBox.hpp
+    code/src/CollisionBox.cpp
+    code/headers/InvalidDimensionException.hpp
+    code/src/InvalidDimensionException.cpp
+    code/headers/NonLandscapeDimensionException.hpp
+    code/src/NonLandscapeDimensionException.cpp
+    code/headers/InvalidMultiplierException.hpp
+    code/src/InvalidMultiplierException.cpp
+
 )
 
 include(cmake/CompilerFlags.cmake)

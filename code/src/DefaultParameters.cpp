@@ -1,39 +1,45 @@
 #include "../headers/DefaultParameters.hpp"
+#include <iostream>
+DefaultParameters * DefaultParameters::DefParams = new DefaultParameters();
 
-DefaultParameters * DefaultParameters::def_parameters = new DefaultParameters();
-
-
-DefaultParameters*& DefaultParameters::get_instance() {
-  if ( !def_parameters ) def_parameters = new DefaultParameters;
-  return def_parameters;
+///@brief Returns the static pointer that contains the default parameters.
+DefaultParameters*& DefaultParameters::GetInstance() {
+  if ( !DefParams ) DefParams = new DefaultParameters;
+  return DefParams;
 }
 
-
-
-void DefaultParameters::set_window_dimensions ( int new_width = 1600 , int new_height = 1000 ) {
-  def_parameters->screen_width = new_width;
-  def_parameters->screen_height = new_height;
+///@brief Sets new window dimensions.
+void DefaultParameters::SetRenderDimensions ( int new_width = 1600 , int new_height = 1000 ) {
+  DefParams->ScreenWidth= new_width;
+  DefParams->ScreenHeight= new_height;
   std::cout
     << "New window dimensions: "
-    << def_parameters->screen_width << "x"
-    << def_parameters->screen_height << '\n';
+    << DefParams->ScreenWidth << "x"
+    << DefParams->ScreenHeight << '\n';
 }
 
-void DefaultParameters::set_mul ( float new_multiplier = 2.0 ) {
 
-  def_parameters->multiplier = new_multiplier;
+///@brief Sets a new multiplier
+void DefaultParameters::SetMultiplier ( float new_multiplier = 2.0 ) {
+
+  DefParams->Multiplier = new_multiplier;
   std::cout << "New multiplier: "
-    << def_parameters->multiplier;
+    << DefParams->Multiplier
+    << '\n';
 }
 
-int DefaultParameters::get_width ( ) {
-  return def_parameters->screen_width;
+///@brief Returns the window's width.
+int DefaultParameters::GetRenderWidth() {
+  return DefParams->ScreenWidth;
 }
 
-int DefaultParameters::get_height ( ) {
-  return def_parameters->screen_height;
+
+///@brief Returns the window's height. 
+int DefaultParameters::GetRenderHeight() {
+  return DefParams->ScreenHeight;
 }
 
-float DefaultParameters::get_mul ( ) {
-  return def_parameters->multiplier;
+///@brief Returns the game's multiplier.
+float DefaultParameters::GetMultiplier ( ) {
+  return DefParams->Multiplier;
 }

@@ -1,42 +1,31 @@
 #pragma once
 #include <string>
 #include "./Entity.hpp"
+#include "./CollisionBox.hpp"
 // #include "./Projectile.hpp"
-#include <vector>
+#include "raylib.h"
 
-#ifndef RAYLIB_H
-#include <raylib.h>
-#endif // !RAYLIB_H
-#include <iostream>
-
-class Player : public Entity {
+class Player : public Entity, public CollisionBox{
 private:
-  std::string player_name;
-  short player_level;
-  short player_lives;
-  float radius;
-  int sides;
+  std::string PlayerName;
+  short PlayerLevel;
+  short PlayerLives;
 
 public:
   Player ( ) = default;
 
-  Player ( const std::string & player_name,
-           short player_level,
-           short player_lives,
-           float rotation,
-           const Vector2 & player_position,
-           float radius,
-           int sides );
-  Player ( const Player & other );
+  Player ( const std::string &, short, short, float, const Vector2 &, float, int );
 
-  void Draw ( )const;
+  Player ( const Player & );
 
-  int GetRotation ( )const;
+  void Draw ( )const override;
 
-  Vector2 GetPos ( )const;
+  int GetRotation ( )const override;
 
-  void show_pos ( ) const;
+  Vector2 GetPos ( )const override;
 
-  void Update ( );
+  void Update ( ) override;
+
+
 };
 
