@@ -1,7 +1,7 @@
 # Project Asteroid
 
 ## Descriere proiect
-Acest repo va conține codul necesar pt proiectul laboratorului de OOP. (urmează ca această rubrică sa finalizată completată mai târziu)
+Acest repo conține codul sursă pentru jocul Project Asteroid, ce are la bază Asteroid, lansat de Atari în 1979. Această variantă de joc va prezenta, pe lângă o perspectivă top-down față de un bird-eye, câteva posibile funcții moderne cum ar fi salvarea progresului, un mod de campanie, pe lângă unu infinit (allegedly) și posibil multe altele dacă voi continua să lucrez la ea.
 
 ## Milestone #0
 
