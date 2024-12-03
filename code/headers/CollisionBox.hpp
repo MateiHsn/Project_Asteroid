@@ -8,4 +8,6 @@ protected:
   float Radius;
 public:
   CollisionBox ( float );
+  CollisionBox ( ) = default;
+  ~CollisionBox ( ) = default;
 };

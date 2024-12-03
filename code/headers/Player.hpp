@@ -12,6 +12,7 @@ private:
   short PlayerLives;
 
 public:
+
   Player ( ) = default;
 
   Player ( const std::string &, short, short, int, const Vector2 &, float, int );
@@ -26,6 +27,4 @@ public:
 
   void Update ( ) override;
 
-
 };
-

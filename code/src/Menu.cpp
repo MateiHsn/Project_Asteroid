@@ -25,16 +25,14 @@ void Menu::RunApp (const std::shared_ptr<Entity> & player ) {
       UpdateState ( PAUSE );
     }
     BeginDrawing ( );
-
-
     if ( RequestExitWindow ) {
       DrawRectangle ( 0,
                       DefaultParameters::GetInstance ( )->GetRenderHeight ( ) * 2 / 5,
                       DefaultParameters::GetInstance ( )->GetRenderWidth ( ),
                       DefaultParameters::GetInstance ( )->GetRenderHeight ( ) / 6,
                       WHITE );
-      constexpr char exit_message [ ] = "                  What do you want to do?\n"
-        "[Q (quit game)/ E (keep playing)/ M (change multiplier) ]";
+      constexpr char exit_message [ ] = "                 What do you want to do?\n"
+                                       "[Q (quit game)/ E (keep playing)/ M (change multiplier) ]";
       DrawText ( exit_message,
                  DefaultParameters::GetInstance ( )->GetRenderWidth ( ) / 2 -
                  MeasureText ( exit_message, DefaultParameters::GetInstance ( )->GetRenderWidth ( ) / 40 ) / 2,
@@ -69,7 +67,8 @@ void Menu::RunApp (const std::shared_ptr<Entity> & player ) {
       ClearBackground ( BLACK );
       player->Update ( );
       player->Draw ( );
-      
+      // for()
+      // urmeaza implementare pentru downcast (update NonPlayer)
     }
     EndDrawing ( );
 

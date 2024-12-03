@@ -13,10 +13,7 @@ public:
 
   Entity ( Vector2 new_position,
            int new_rotation,
-           int new_sides )
-    : Position ( new_position )
-    , Rotation ( new_rotation )
-    , Sides ( new_sides ) { }
+           int new_sides );
 
   virtual Vector2 GetPos ( )const = 0;
   virtual int GetRotation ( )const = 0;

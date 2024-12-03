@@ -1,6 +1,3 @@
-//
-// Created by haisa on 26/11/2024.
-//
 #pragma once
 
 #include "./Entity.hpp"
@@ -10,10 +7,7 @@
 
 class Projectile : public Entity, public CollisionBox {
 private:
-  int ProjectileType;
   int ProjectileDamage;
 public:
-
+  Projectile ( ) = default;
 };
-
-

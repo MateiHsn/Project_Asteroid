@@ -73,21 +73,21 @@ void Player::Update ( ){
       sin ( ( this->Rotation - 90 ) * DEG2RAD ) * 5 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
 
     if ( IsKeyDown ( KEY_RIGHT ) ) {
-      this->Rotation -= 5 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
+      this->Rotation -= 4 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
       rotated = true;
     }
     if ( IsKeyDown ( KEY_LEFT ) ) {
-      this->Rotation += 5 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
+      this->Rotation += 4 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
       rotated = true;
     }
   }
 
   if ( !rotated ) {
     if ( IsKeyDown ( KEY_RIGHT ) ) {
-      this->Rotation += 5 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
+      this->Rotation += 4 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
     }
     if ( IsKeyDown ( KEY_LEFT ) ) {
-      this->Rotation -= 5 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
+      this->Rotation -= 4 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
     }
   }
 
