@@ -53,8 +53,8 @@ add_executable(${PROJECT_NAME}
     code/src/Menu.cpp
     code/headers/Projectile.hpp
     code/src/Projectile.cpp
-    #code/headers/Enemy.hpp
-    #code/src/Enemy.cpp
+    code/headers/Enemy.hpp
+    code/src/Enemy.cpp
     code/headers/CollisionBox.hpp
     code/src/CollisionBox.cpp
     code/headers/InvalidDimensionException.hpp

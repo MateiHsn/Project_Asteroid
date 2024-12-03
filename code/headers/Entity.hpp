@@ -6,17 +6,17 @@
 
 class Entity {
 protected:
-  Vector2 position;
-  int rotation;
-  int sides;
+  Vector2 Position;
+  int Rotation;
+  int Sides;
 public:
 
   Entity ( Vector2 new_position,
            int new_rotation,
            int new_sides )
-    : position ( new_position )
-    , rotation ( new_rotation )
-    , sides ( new_sides ) { }
+    : Position ( new_position )
+    , Rotation ( new_rotation )
+    , Sides ( new_sides ) { }
 
   virtual Vector2 GetPos ( )const = 0;
   virtual int GetRotation ( )const = 0;

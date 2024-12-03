@@ -1,6 +1,6 @@
 #include <iostream>
 
-class NonLandscapeDimensions : public std::exception {
+class NonLandscapeDimensionsException : public std::exception {
 public:
   const char * what ( )const noexcept override;
 };

@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-class InvalidDimensionsException : public std::exception {
+class NullNegativeDimensionsException : public std::exception {
 public:
   const char * what ( )const noexcept override;
 };

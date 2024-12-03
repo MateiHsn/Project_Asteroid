@@ -20,9 +20,9 @@ dims:
     std::cout << "Render height : ";
     std::cin >> *y;
 
-    if ( *x <= 0 || *y <= 0 )throw InvalidDimensionsException ( );
+    if ( *x < *y && *x > 0 && *y > 0 ) throw NonLandscapeDimensionsException ( );
 
-    if ( *x < *y && *x > 0 && *y > 0 ) throw NonLandscapeDimensions ( );
+    if ( *x <= 0 || *y <= 0 )throw NullNegativeDimensionsException ( );
 
 mult:
 
@@ -31,10 +31,10 @@ mult:
 
     if ( *m < 1 || *m > 2.5 ) throw InvalidMultiplierException ( );
 
-  } catch ( const NonLandscapeDimensions & err ) {
+  } catch ( const NonLandscapeDimensionsException & err ) {
     std::cout << err.what ( );
     goto dims;
-  } catch ( const InvalidDimensionsException & err ) {
+  } catch ( const NullNegativeDimensionsException & err ) {
     std::cout << err.what ( );
     goto dims;
   } catch ( const InvalidMultiplierException & err ) {
@@ -55,7 +55,6 @@ mult:
                                                            static_cast< float >( DefaultParameters::GetInstance ( )->GetRenderHeight ( ) ) / 2 },
                                                          DefaultParameters::GetInstance ( )->GetRenderWidth ( ) / 60,
                                                          3) );
-
 
   std::unique_ptr<Menu> menu = std::make_unique<Menu> ( PLAYING );
 

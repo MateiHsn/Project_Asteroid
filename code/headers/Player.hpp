@@ -14,7 +14,7 @@ private:
 public:
   Player ( ) = default;
 
-  Player ( const std::string &, short, short, float, const Vector2 &, float, int );
+  Player ( const std::string &, short, short, int, const Vector2 &, float, int );
 
   Player ( const Player & );
 

@@ -10,8 +10,8 @@
 
 class Projectile : public Entity, public CollisionBox {
 private:
-  int projectile_type;
-  int projectile_damage;
+  int ProjectileType;
+  int ProjectileDamage;
 public:
 
 };

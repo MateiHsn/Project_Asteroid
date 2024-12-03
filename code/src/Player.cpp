@@ -8,7 +8,7 @@
 Player::Player ( const std::string & new_player_name
                  , short new_player_level
                  , short new_player_lives
-                 , float new_rotation
+                 , int new_rotation
                  , const Vector2 & new_player_position
                  , float new_radius
                  , int new_sides )
@@ -16,7 +16,7 @@ Player::Player ( const std::string & new_player_name
   , PlayerLevel ( new_player_level )
   , PlayerLives ( new_player_lives )
   , Entity ( new_player_position, new_rotation, new_sides )
-  ,CollisionBox(new_radius){
+  , CollisionBox ( new_radius ) {
   std::cout << "A aparut jucatorul " << PlayerName << '\n';
 }
 
@@ -24,7 +24,7 @@ Player::Player ( const Player & other )
   : PlayerName ( other.PlayerName )
   , PlayerLevel ( other.PlayerLevel )
   , PlayerLives ( other.PlayerLives )
-  , Entity ( other.position, other.rotation, other.sides )
+  , Entity ( other.Position, other.Rotation, other.Sides )
   , CollisionBox ( other.Radius ) {
 
   std::cout << "A fost copiat " << PlayerName << "\n";
@@ -32,24 +32,24 @@ Player::Player ( const Player & other )
 
 
 Vector2 Player::GetPos ( )const {
-  return this->position;
+  return this->Position;
 }
 int Player::GetRotation ( )const {
-  return this->rotation;
+  return this->Rotation;
 }
 
 void Player::Draw ( )const {
-  if ( this->sides == 3 ) {
-    DrawPolyLinesEx ( this->position, 
-                      this->sides, 
+  if ( this->Sides == 3 ) {
+    DrawPolyLinesEx ( this->Position, 
+                      this->Sides, 
                       this->Radius, 
-                      this->rotation + 30, 
+                      this->Rotation + 30, 
                       3, 
                       RED );
-    DrawLine ( this->position.x,
-               this->position.y,
-               this->position.x + DefaultParameters::GetInstance ( )->GetRenderWidth ( ) / 50 * cos ( ( this->rotation - 90 ) * DEG2RAD ),
-               this->position.y + DefaultParameters::GetInstance ( )->GetRenderWidth ( ) / 50 * sin ( ( this->rotation - 90 ) * DEG2RAD ),
+    DrawLine ( this->Position.x,
+               this->Position.y,
+               this->Position.x + DefaultParameters::GetInstance ( )->GetRenderWidth ( ) / 50 * cos ( ( this->Rotation - 90 ) * DEG2RAD ),
+               this->Position.y + DefaultParameters::GetInstance ( )->GetRenderWidth ( ) / 50 * sin ( ( this->Rotation - 90 ) * DEG2RAD ),
                WHITE );
   }
 }
@@ -61,41 +61,41 @@ void Player::Update ( ){
   bool rotated = false;
 
   if ( IsKeyDown ( KEY_UP ) ) {
-    this->position.x +=
-      cos ( ( this->rotation - 90 ) * DEG2RAD ) * 5 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
-    this->position.y +=
-      sin ( ( this->rotation - 90 ) * DEG2RAD ) * 5 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
+    this->Position.x +=
+      cos ( ( this->Rotation - 90 ) * DEG2RAD ) * 5 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
+    this->Position.y +=
+      sin ( ( this->Rotation - 90 ) * DEG2RAD ) * 5 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
   }
   if ( IsKeyDown ( KEY_DOWN ) ) {
-    this->position.x -=
-      cos ( ( this->rotation - 90 ) * DEG2RAD ) * 5 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
-    this->position.y -=
-      sin ( ( this->rotation - 90 ) * DEG2RAD ) * 5 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
+    this->Position.x -=
+      cos ( ( this->Rotation - 90 ) * DEG2RAD ) * 5 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
+    this->Position.y -=
+      sin ( ( this->Rotation - 90 ) * DEG2RAD ) * 5 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
 
     if ( IsKeyDown ( KEY_RIGHT ) ) {
-      this->rotation -= 5 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
+      this->Rotation -= 5 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
       rotated = true;
     }
     if ( IsKeyDown ( KEY_LEFT ) ) {
-      this->rotation += 5 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
+      this->Rotation += 5 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
       rotated = true;
     }
   }
 
   if ( !rotated ) {
     if ( IsKeyDown ( KEY_RIGHT ) ) {
-      this->rotation += 5 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
+      this->Rotation += 5 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
     }
     if ( IsKeyDown ( KEY_LEFT ) ) {
-      this->rotation -= 5 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
+      this->Rotation -= 5 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
     }
   }
 
-  if ( this->rotation >= 180 )
-    this->rotation -= 360;
+  if ( this->Rotation >= 180 )
+    this->Rotation -= 360;
 
-  if ( this->rotation <= -180 )
-    this->rotation += 360;
+  if ( this->Rotation <= -180 )
+    this->Rotation += 360;
 
   // trigger for projectile creation 
 
@@ -105,16 +105,16 @@ void Player::Update ( ){
 
   // if clauses that limit the player's movement to the inside of the render window
 
-  if ( this->position.x < Radius / 2. )
-    this->position.x = Radius / 2.;
+  if ( this->Position.x < Radius / 2. )
+    this->Position.x = Radius / 2.;
 
-  if ( this->position.x > DefaultParameters::GetInstance ( )->GetRenderWidth ( ) - Radius / 2. )
-    this->position.x = DefaultParameters::GetInstance ( )->GetRenderWidth ( ) - Radius / 2.;
+  if ( this->Position.x > DefaultParameters::GetInstance ( )->GetRenderWidth ( ) - Radius / 2. )
+    this->Position.x = DefaultParameters::GetInstance ( )->GetRenderWidth ( ) - Radius / 2.;
 
-  if ( this->position.y < Radius / 2. )
-    this->position.y = Radius / 2.;
+  if ( this->Position.y < Radius / 2. )
+    this->Position.y = Radius / 2.;
 
-  if ( this->position.y > DefaultParameters::GetInstance ( )->GetRenderHeight ( ) - Radius / 2. )
-    this->position.y = DefaultParameters::GetInstance ( )->GetRenderHeight ( ) - Radius / 2.;
+  if ( this->Position.y > DefaultParameters::GetInstance ( )->GetRenderHeight ( ) - Radius / 2. )
+    this->Position.y = DefaultParameters::GetInstance ( )->GetRenderHeight ( ) - Radius / 2.;
 
 }

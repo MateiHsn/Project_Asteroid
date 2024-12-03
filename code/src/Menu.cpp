@@ -5,7 +5,7 @@
 #include "raylib.h"
 
 
-void Menu::RunApp (const std::shared_ptr<Player> & player ) {
+void Menu::RunApp (const std::shared_ptr<Entity> & player ) {
 
   SetExitKey ( KEY_NULL );
 
@@ -78,8 +78,8 @@ void Menu::RunApp (const std::shared_ptr<Player> & player ) {
 }
 
 void Menu::UpdateState ( char new_state ){
-  state = new_state;
+  State = new_state;
   std::cout << "New state: "
-    << static_cast< int >( state ) << '\n';
+    << static_cast< int >( State ) << '\n';
 }
 
