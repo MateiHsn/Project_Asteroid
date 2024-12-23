@@ -6,14 +6,15 @@ DefaultParameters * DefaultParameters::DefPars = nullptr;
 
 ///@brief Returns the static pointer that contains the default parameters.
 
-DefaultParameters *& DefaultParameters::GetInstance ( ) {
-  if ( !DefPars ) DefPars = new DefaultParameters;
+DefaultParameters * & DefaultParameters::GetInstance ( ) {
+  if ( DefPars == nullptr ) DefPars = new DefaultParameters( );
   return DefPars;
 }
 
-
+void DefaultParameters::FreeInstance ( ) { delete DefPars; }
 
 ///@brief Sets new window dimensions.
+///
 void DefaultParameters::SetRenderDimensions ( int new_width = 1600 , int new_height = 1000 ) {
   DefPars->RenderWidth= new_width;
   DefPars->RenderHeight= new_height;
@@ -22,7 +23,6 @@ void DefaultParameters::SetRenderDimensions ( int new_width = 1600 , int new_hei
     << DefPars->RenderWidth << "x"
     << DefPars->RenderHeight << '\n';
 }
-
 
 ///@brief Sets a new multiplier
 void DefaultParameters::SetMultiplier ( float new_multiplier = 2.0 ) {
@@ -37,7 +37,6 @@ void DefaultParameters::SetMultiplier ( float new_multiplier = 2.0 ) {
 int DefaultParameters::GetRenderWidth() {
   return DefPars->RenderWidth;
 }
-
 
 ///@brief Returns the window's height. 
 int DefaultParameters::GetRenderHeight() {

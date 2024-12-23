@@ -1,11 +1,22 @@
 #include "../headers/Menu.hpp"
 #include "../headers/Player.hpp"
 #include "../headers/DefaultParameters.hpp"
+#include "../headers/NonPlayer.hpp"
+#include "../headers/Enemy.hpp"
+#include "../headers/Projectile.hpp"
 #include "./Player.cpp"
 #include "raylib.h"
 
+#include <ctime>
+#include <cstdlib>
 
-void Menu::RunApp (const std::shared_ptr<Entity> & player ) {
+void Menu::RunApp (const std::shared_ptr<Player> & player,
+                  std::vector<std::shared_ptr<NonPlayer>> & nps) {
+
+  srand ( time ( nullptr ) );
+
+  short ProjectileCounter = 0;
+  short EnemyCounter = 0;
 
   SetExitKey ( KEY_NULL );
 
@@ -65,10 +76,19 @@ void Menu::RunApp (const std::shared_ptr<Entity> & player ) {
 
     } else {
       ClearBackground ( BLACK );
-      player->Update ( );
+      player->Update ( nps );
       player->Draw ( );
-      // for()
-      // urmeaza implementare pentru downcast (update NonPlayer)
+      //
+      // for(auto i = nps.begin(); i != nps.end(); ++i ) {
+      //   if ( std::dynamic_pointer_cast< std::shared_ptr<Enemy> >( *i ) != nullptr ) {
+      //     ( *i )->Update ( nps );
+      //     ( *i )->Draw ( );
+      //   }
+      //   if ( std::dynamic_pointer_cast< std::shared_ptr<Projectile> >( *i ) != nullptr ) {
+      //     ( *i )->Update ( nps );
+      //     ( *i )->Draw ( );
+      //   }
+      // }
     }
     EndDrawing ( );
 

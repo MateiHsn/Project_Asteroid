@@ -2,8 +2,9 @@
 
 
 #include "Player.hpp"
-
+#include <vector>
 #include <iostream>
+#include "NonPlayer.hpp"
 
 
 /// @brief Class that describes the game window / menu.
@@ -23,7 +24,8 @@ public:
   }
 
   /// @brief Opens the window and starts the game.
-  void RunApp (const std::shared_ptr<Entity> & );
+  void RunApp (const std::shared_ptr<Player> & ,
+                std::vector<std::shared_ptr<NonPlayer>> &);
 
 
   ///@brief Change the state of the menu based on inputs.

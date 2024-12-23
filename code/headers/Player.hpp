@@ -2,8 +2,9 @@
 #include <string>
 #include "./Entity.hpp"
 #include "./CollisionBox.hpp"
-// #include "./Projectile.hpp"
+#include "./NonPlayer.hpp"
 #include "raylib.h"
+#include <vector>
 
 class Player : public Entity, public CollisionBox{
 private:
@@ -21,10 +22,12 @@ public:
 
   void Draw ( )const override;
 
-  int GetRotation ( )const override;
+  int GetRotation ( )const;
 
-  Vector2 GetPos ( )const override;
+  Vector2 GetPos ( )const;
 
-  void Update ( ) override;
+  void Update ( std::vector<std::shared_ptr<NonPlayer>> &);
+
+  void Draw()const();
 
 };

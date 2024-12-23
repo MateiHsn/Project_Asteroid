@@ -1,6 +1,5 @@
 #pragma once
 
-
 class CollisionBox {
 protected:
   ///@brief Describes the size of the entity (player, enemy or projectile)
@@ -9,5 +8,5 @@ protected:
 public:
   CollisionBox ( float );
   CollisionBox ( ) = default;
-  ~CollisionBox ( ) = default;
+  virtual ~CollisionBox ( ) = default;
 };

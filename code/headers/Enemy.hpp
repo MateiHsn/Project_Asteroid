@@ -2,18 +2,24 @@
 
 #include "Entity.hpp"
 #include "CollisionBox.hpp"
+#include "NonPlayer.hpp"
+#include <cstdlib>
+#include <ctime>
 
-class Enemy :public Entity, public CollisionBox{
+
+class Enemy :public NonPlayer, public CollisionBox{
 private:
   int EnemyLevel;
   int EnemyHealthPoints;
 public:
-  Vector2 GetPos ( )const override { return Position; }
-  int GetRotation ( )const override { return 0; }
+  Vector2 GetPos ( )const { return Position; }
+  int GetRotation ( )const { return Rotation; }
 
-  Enemy ( ) = default;
   ~Enemy ( ) = default ;
+  Enemy ( ) = default;
 
-  void Update ( )override;
-  void Draw ( )const override;
+  Enemy ( Vector2, int, int, float , int, int);
+
+  void Draw()const override;
+  
 };

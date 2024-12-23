@@ -1,9 +1,11 @@
 #include "../headers/Player.hpp"
 #include "../headers/DefaultParameters.hpp"
 #include "../headers/CollisionBox.hpp"
+#include "../headers/NonPlayer.hpp"
 #include <stdlib.h>
 #include <string>
 #include <cmath>
+#include <memory>
 
 Player::Player ( const std::string & new_player_name
                  , short new_player_level
@@ -56,65 +58,71 @@ void Player::Draw ( )const {
 
 /// @brief Updates the position and rotation of the player.
 
-void Player::Update ( ){
+void Player::Update ( std::vector<std::shared_ptr<NonPlayer>> & nps ) {
 
   bool rotated = false;
 
   if ( IsKeyDown ( KEY_UP ) ) {
-    this->Position.x +=
-      cos ( ( this->Rotation - 90 ) * DEG2RAD ) * 5 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
-    this->Position.y +=
-      sin ( ( this->Rotation - 90 ) * DEG2RAD ) * 5 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
+    Position.x +=
+      cos ( ( Rotation - 90 ) * DEG2RAD ) * 5 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
+    Position.y +=
+      sin ( ( Rotation - 90 ) * DEG2RAD ) * 5 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
   }
   if ( IsKeyDown ( KEY_DOWN ) ) {
-    this->Position.x -=
-      cos ( ( this->Rotation - 90 ) * DEG2RAD ) * 5 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
-    this->Position.y -=
-      sin ( ( this->Rotation - 90 ) * DEG2RAD ) * 5 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
+    Position.x -=
+      cos ( ( Rotation - 90 ) * DEG2RAD ) * 5 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
+    Position.y -=
+      sin ( ( Rotation - 90 ) * DEG2RAD ) * 5 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
 
     if ( IsKeyDown ( KEY_RIGHT ) ) {
-      this->Rotation -= 4 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
+      Rotation -= 4 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
       rotated = true;
     }
     if ( IsKeyDown ( KEY_LEFT ) ) {
-      this->Rotation += 4 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
+      Rotation += 4 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
       rotated = true;
     }
   }
 
   if ( !rotated ) {
     if ( IsKeyDown ( KEY_RIGHT ) ) {
-      this->Rotation += 4 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
+      Rotation += 4 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
     }
     if ( IsKeyDown ( KEY_LEFT ) ) {
-      this->Rotation -= 4 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
+      Rotation -= 4 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
     }
   }
 
-  if ( this->Rotation >= 180 )
-    this->Rotation -= 360;
+  if ( Rotation >= 180 )
+    Rotation -= 360;
 
-  if ( this->Rotation <= -180 )
-    this->Rotation += 360;
-
-  // trigger for projectile creation 
-
-  if ( IsMouseButtonPressed ( MOUSE_BUTTON_LEFT ) || IsKeyPressed ( KEY_ENTER ) || IsKeyPressed ( KEY_SPACE ) ) {
-    std::cout << "\n\n----Trage----\n\n";
-  }
+  if ( Rotation <= -180 )
+    Rotation += 360;
 
   // if clauses that limit the player's movement to the inside of the render window
 
-  if ( this->Position.x < Radius / 2. )
-    this->Position.x = Radius / 2.;
+  if ( Position.x < Radius / 2. )
+    Position.x = Radius / 2.;
 
-  if ( this->Position.x > DefaultParameters::GetInstance ( )->GetRenderWidth ( ) - Radius / 2. )
-    this->Position.x = DefaultParameters::GetInstance ( )->GetRenderWidth ( ) - Radius / 2.;
+  if ( Position.x > DefaultParameters::GetInstance ( )->GetRenderWidth ( ) - Radius / 2. )
+    Position.x = DefaultParameters::GetInstance ( )->GetRenderWidth ( ) - Radius / 2.;
 
-  if ( this->Position.y < Radius / 2. )
-    this->Position.y = Radius / 2.;
+  if ( Position.y < Radius / 2. )
+    Position.y = Radius / 2.;
 
-  if ( this->Position.y > DefaultParameters::GetInstance ( )->GetRenderHeight ( ) - Radius / 2. )
-    this->Position.y = DefaultParameters::GetInstance ( )->GetRenderHeight ( ) - Radius / 2.;
+  if ( Position.y > DefaultParameters::GetInstance ( )->GetRenderHeight ( ) - Radius / 2. )
+    Position.y = DefaultParameters::GetInstance ( )->GetRenderHeight ( ) - Radius / 2.;
 
+  // trigger for projectile creation 
+  //
+  // if ( IsMouseButtonPressed ( MOUSE_BUTTON_LEFT ) || IsKeyPressed ( KEY_ENTER ) || IsKeyPressed ( KEY_SPACE ) ) {
+  //   nps.push_back ( std::make_shared<Projectile> ( Projectile ( { Position.x + Radius * cos ( ( Rotation - 90 ) * DEG2RAD ),
+  //                                                               Position.y + Radius * sin ( ( Rotation - 90 ) * DEG2RAD ) },
+  //                                                               this->Rotation,
+  //                                                               this->Sides,
+  //                                                               this->Radius,
+  //                                                               this->PlayerLevel * 2,
+  //                                                               LASER
+  //   ) ) );
+  // }
 }

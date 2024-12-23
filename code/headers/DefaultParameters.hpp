@@ -22,11 +22,13 @@ private:
   static DefaultParameters * DefPars;
 
   DefaultParameters ( ) = default;
-  ~DefaultParameters ( ) = default;
+  ~DefaultParameters ( ) {
+    delete DefPars;
+  }
 
 public:
 
-  static DefaultParameters *& GetInstance ( );
+  static DefaultParameters* & GetInstance ( );
 
   static void SetRenderDimensions ( int, int );
   static void SetMultiplier ( float );
@@ -34,9 +36,13 @@ public:
   static int GetRenderWidth ( );
   static int GetRenderHeight ( );
 
+  static void FreeInstance ( );
+
   DefaultParameters ( const DefaultParameters & ) = delete;
   DefaultParameters & operator = ( const DefaultParameters & ) = delete;
 
 };
 
 enum MenuStates { MENU, PLAYING, PAUSE, SETTINGS, EXIT};
+
+enum WeaponTypes{LASER};
