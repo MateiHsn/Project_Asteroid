@@ -22,9 +22,7 @@ private:
   static DefaultParameters * DefPars;
 
   DefaultParameters ( ) = default;
-  ~DefaultParameters ( ) {
-    delete DefPars;
-  }
+  ~DefaultParameters ( ) = default;
 
 public:
 

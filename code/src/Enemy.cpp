@@ -19,10 +19,6 @@ Enemy::Enemy ( Vector2 new_position,
 
 
 
-void Enemy::Update() {
-
-}
-
 void Enemy::Draw() const {
 
 

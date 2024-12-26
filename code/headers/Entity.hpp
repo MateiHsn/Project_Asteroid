@@ -16,7 +16,7 @@ public:
     , Rotation ( new_rotation )
     , Sides ( new_sides ) { }
 
-  virtual void Draw ( )const = 0;
+  // virtual void Draw ( )const = 0;
 
   virtual ~Entity ( ) = default;
 

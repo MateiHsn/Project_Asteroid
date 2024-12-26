@@ -6,7 +6,8 @@ protected:
   ///based on its collision box radius.
   float Radius;
 public:
-  CollisionBox ( float );
+
+  CollisionBox ( float NewRadius ) : Radius ( NewRadius ) { }
   CollisionBox ( ) = default;
   virtual ~CollisionBox ( ) = default;
 };

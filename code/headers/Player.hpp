@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-#include "./Entity.hpp"
 #include "./CollisionBox.hpp"
 #include "./NonPlayer.hpp"
 #include "raylib.h"
@@ -20,14 +19,12 @@ public:
 
   Player ( const Player & );
 
-  void Draw ( )const override;
+  void Draw ( )const ;
 
   int GetRotation ( )const;
 
   Vector2 GetPos ( )const;
 
   void Update ( std::vector<std::shared_ptr<NonPlayer>> &);
-
-  void Draw()const();
 
 };
