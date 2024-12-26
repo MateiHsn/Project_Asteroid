@@ -21,7 +21,7 @@ dims:
     std::cout << "Render height : ";
     std::cin >> *y;
 
-    if ( *x < *y && *x > 0 && *y > 0 ) throw NonLandscapeDimensionsException ( );\
+    if ( *x < *y && *x > 0 && *y > 0 ) throw NonLandscapeDimensionsException ( );
 
     if ( *x <= 0 || *y <= 0 )throw NullNegativeDimensionsException ( );
 
