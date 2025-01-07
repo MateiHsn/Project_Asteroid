@@ -10,4 +10,9 @@ public:
   CollisionBox ( float NewRadius ) : Radius ( NewRadius ) { }
   CollisionBox ( ) = default;
   virtual ~CollisionBox ( ) = default;
+
+  float GetRadius ( ) const {
+    return Radius;
+  };
+
 };

@@ -63,8 +63,7 @@ add_executable(${PROJECT_NAME}
     code/src/NonLandscapeDimensionException.cpp
     code/headers/InvalidMultiplierException.hpp
     code/src/InvalidMultiplierException.cpp
-    code/headers/NonPlayer.hpp
-    code/src/NonPlayer.cpp
+    code/headers/EntityManager.hpp
 )
 
 include(cmake/CompilerFlags.cmake)

@@ -12,6 +12,7 @@ private:
   int RenderWidth;
   int RenderHeight;
   float Multiplier;
+  float AspectRatio;
 
   /// 
   /// @brief Pointer to the singleton class pointer

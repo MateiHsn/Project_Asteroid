@@ -5,17 +5,18 @@
 
 #include "code/headers/Exceptions.hpp"
 #include "code/headers/Player.hpp"
+#include "code/headers/Entity.hpp"
 #include "code/headers/DefaultParameters.hpp"
 #include "code/headers/Menu.hpp"
+
+int Entity::EntityID = 0;
 
 int main() {
   int* x = new int(0);
   int* y = new int(0);
   float* m = new float(0.f);
 
-  bool go = false;
-
-  while(!go) {
+  while(true) {
 
     try {
       if ( !( *x ) ) {
@@ -25,18 +26,17 @@ int main() {
       }
 
       if ( !( *y ) ) {
-        std::cout << "Render height; ";
+        std::cout << "Render height: ";
         std::cin >> *y;
         if ( *y <= 0 ) throw NullNegativeDimensionsException ( );
       }
 
       if ( *x <= *y )throw NonLandscapeDimensionsException ( );
 
-
       if ( !( *m ) ) {
-        std::cout << "Game multiplier [1.5 - 3]:";
+        std::cout << "Game multiplier [2 - 2.5]:";
         std::cin >> *m;
-        if ( *m < 1.5 || *m > 3 ) throw InvalidMultiplierException ( );
+        if ( *m < 2 || *m > 2.5 ) throw InvalidMultiplierException ( );
       }
     }
     catch ( NullNegativeDimensionsException & err ) {
@@ -55,7 +55,7 @@ int main() {
       continue;
     }
 
-    go = true;
+    break;
 
   }
 
@@ -79,7 +79,7 @@ int main() {
 
   std::unique_ptr<Menu> menu = std::make_unique<Menu> ( PLAYING );
 
-  std::vector<std::shared_ptr<NonPlayer>> nps;
+  std::vector<std::shared_ptr<Entity>> nps;
 
   nps.reserve ( 100 );
 

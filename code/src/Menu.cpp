@@ -1,9 +1,10 @@
 #include "../headers/Menu.hpp"
 #include "../headers/Player.hpp"
 #include "../headers/DefaultParameters.hpp"
-#include "../headers/NonPlayer.hpp"
+#include "../headers/Entity.hpp"
 #include "../headers/Enemy.hpp"
 #include "../headers/Projectile.hpp"
+#include "../headers/CollisionBox.hpp"
 #include "./Player.cpp"
 #include "raylib.h"
 
@@ -11,7 +12,8 @@
 #include <cstdlib>
 
 void Menu::RunApp (const std::shared_ptr<Player> & player,
-                  std::vector<std::shared_ptr<NonPlayer>> & nps) {
+                  std::vector<std::shared_ptr<Entity>> & nps) {
+
 
   srand ( time ( nullptr ) );
 
@@ -29,7 +31,11 @@ void Menu::RunApp (const std::shared_ptr<Player> & player,
   bool ExitWindow = false;
   bool RequestExitWindow = false;
 
+  double start = GetTime ( );
+
   while ( !ExitWindow ) {
+
+    double end = GetTime ( );
 
     if ( WindowShouldClose ( ) || IsKeyPressed ( KEY_ESCAPE ) ) {
       RequestExitWindow = true;
@@ -78,17 +84,33 @@ void Menu::RunApp (const std::shared_ptr<Player> & player,
       ClearBackground ( BLACK );
       player->Update ( nps );
       player->Draw ( );
-      //
-      // for(auto i = nps.begin(); i != nps.end(); ++i ) {
-      //   if ( std::dynamic_pointer_cast< std::shared_ptr<Enemy> >( *i ) != nullptr ) {
-      //     ( *i )->Update ( nps );
-      //     ( *i )->Draw ( );
-      //   }
-      //   if ( std::dynamic_pointer_cast< std::shared_ptr<Projectile> >( *i ) != nullptr ) {
-      //     ( *i )->Update ( nps );
-      //     ( *i )->Draw ( );
-      //   }
-      // }
+      
+      for(auto i = nps.begin(); i != nps.end(); ++i ) {
+        std::shared_ptr<Enemy> e = std::dynamic_pointer_cast< Enemy >( *i );
+        if ( e != nullptr ) {
+          ( *i )->Update ( );
+          ( *i )->Draw ( );
+        }
+        std::shared_ptr<Projectile> p = std::dynamic_pointer_cast< Projectile >( *i );
+        if ( p != nullptr ) {
+          ( *i )->Update ( );
+          ( *i )->Draw ( );
+        }
+        //
+        // if((*i)->GetPos().x > DefaultParameters::GetInstance()->GetRenderWidth() ||
+        //     ( *i )->GetPos ( ).x < 0 ||
+        //     (*i)->GetPos().y < 0 ||
+        //     ( *i )->GetPos ( ).y > DefaultParameters::GetInstance ( )->GetRenderHeight( ) ) {
+        //   nps.erase ( i );
+        // }
+        end = GetTime ( );
+        if ( start - end >= 3 ) nps.push_back ( std::make_shared<Enemy> ( Enemy ( player->GetPos ( ),
+                                                                                  player->GetRotation ( ),
+                                                                                  3,
+                                                                                  player->GetRadius ( ),
+                                                                                  5,
+                                                                                  10 ) ) );
+      }
     }
     EndDrawing ( );
 

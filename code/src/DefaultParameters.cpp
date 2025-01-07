@@ -6,18 +6,22 @@ DefaultParameters * DefaultParameters::DefPars = nullptr;
 
 ///@brief Returns the static pointer that contains the default parameters.
 
-DefaultParameters * & DefaultParameters::GetInstance ( ) {
-  if ( DefPars == nullptr ) DefPars = new DefaultParameters( );
+DefaultParameters *& DefaultParameters::GetInstance ( ) {
+  if ( DefPars == nullptr ) DefPars = new DefaultParameters ( );
   return DefPars;
 }
 
+/// <summary>
+/// Frees the dinamically allocated singleton instance.
+/// </summary>
 void DefaultParameters::FreeInstance ( ) { delete DefPars; }
 
 ///@brief Sets new window dimensions.
 ///
-void DefaultParameters::SetRenderDimensions ( int new_width = 1600 , int new_height = 1000 ) {
-  DefPars->RenderWidth= new_width;
-  DefPars->RenderHeight= new_height;
+void DefaultParameters::SetRenderDimensions ( int new_width = 1600, int new_height = 1000 ) {
+  DefPars->RenderWidth = new_width;
+  DefPars->RenderHeight = new_height;
+  DefPars->AspectRatio = DefPars->RenderWidth / DefPars->GetRenderHeight ( );
   std::cout
     << "New window dimensions: "
     << DefPars->RenderWidth << "x"
@@ -34,16 +38,10 @@ void DefaultParameters::SetMultiplier ( float new_multiplier = 2.0 ) {
 }
 
 ///@brief Returns the window's width.
-int DefaultParameters::GetRenderWidth() {
-  return DefPars->RenderWidth;
-}
+int DefaultParameters::GetRenderWidth() { return DefPars->RenderWidth; }
 
 ///@brief Returns the window's height. 
-int DefaultParameters::GetRenderHeight() {
-  return DefPars->RenderHeight;
-}
+int DefaultParameters::GetRenderHeight() { return DefPars->RenderHeight; }
 
 ///@brief Returns the game's multiplier.
-float DefaultParameters::GetMultiplier ( ) {
-  return DefPars->Multiplier;
-}
+float DefaultParameters::GetMultiplier ( ) { return DefPars->Multiplier; }

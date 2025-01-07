@@ -1,7 +1,7 @@
 #include "../headers/Player.hpp"
 #include "../headers/DefaultParameters.hpp"
 #include "../headers/CollisionBox.hpp"
-#include "../headers/NonPlayer.hpp"
+#include "../headers/Entity.hpp"
 #include <stdlib.h>
 #include <string>
 #include <cmath>
@@ -18,77 +18,71 @@ Player::Player ( const std::string & new_player_name
   , PlayerLevel ( new_player_level )
   , PlayerLives ( new_player_lives )
   , Entity ( new_player_position, new_rotation, new_sides )
-  , CollisionBox ( new_radius ) {
-  std::cout << "A aparut jucatorul " << PlayerName << '\n';
-}
+  , CollisionBox ( new_radius ) { }
 
 Player::Player ( const Player & other )
   : PlayerName ( other.PlayerName )
   , PlayerLevel ( other.PlayerLevel )
   , PlayerLives ( other.PlayerLives )
   , Entity ( other.Position, other.Rotation, other.Sides )
-  , CollisionBox ( other.Radius ) {
-
-  std::cout << "A fost copiat " << PlayerName << "\n";
-}
+  , CollisionBox ( other.Radius ) { }
 
 
-Vector2 Player::GetPos ( )const {
-  return this->Position;
-}
-int Player::GetRotation ( )const {
-  return this->Rotation;
-}
+Vector2 Player::GetPos ( )const { return this->Position; }
+
+int Player::GetRotation ( )const { return this->Rotation; }
 
 void Player::Draw ( )const {
   if ( this->Sides == 3 ) {
-    DrawPolyLinesEx ( this->Position, 
-                      this->Sides, 
-                      this->Radius, 
-                      this->Rotation + 30, 
-                      3, 
+    DrawPolyLinesEx ( this->Position,
+                      this->Sides,
+                      this->Radius,
+                      this->Rotation + 30,
+                      3,
                       RED );
     DrawLine ( this->Position.x,
                this->Position.y,
-               this->Position.x + DefaultParameters::GetInstance ( )->GetRenderWidth ( ) / 50 * cos ( ( this->Rotation - 90 ) * DEG2RAD ),
-               this->Position.y + DefaultParameters::GetInstance ( )->GetRenderWidth ( ) / 50 * sin ( ( this->Rotation - 90 ) * DEG2RAD ),
+               this->Position.x + DefaultParameters::GetInstance ( )->GetRenderWidth ( ) / 50 * cos (
+                 ( this->Rotation - 90 ) * DEG2RAD ),
+               this->Position.y + DefaultParameters::GetInstance ( )->GetRenderWidth ( ) / 50 * sin (
+                 ( this->Rotation - 90 ) * DEG2RAD ),
                WHITE );
   }
 }
 
 /// @brief Updates the position and rotation of the player.
 
-void Player::Update ( std::vector<std::shared_ptr<NonPlayer>> & nps ) {
+void Player::Update ( std::vector<std::shared_ptr<Entity>> & nps ) {
 
   bool rotated = false;
 
-  if ( IsKeyDown ( KEY_UP ) ) {
+  if ( IsKeyDown ( KEY_UP ) || IsKeyDown ( KEY_A ) ) {
     Position.x +=
       cos ( ( Rotation - 90 ) * DEG2RAD ) * 5 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
     Position.y +=
       sin ( ( Rotation - 90 ) * DEG2RAD ) * 5 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
   }
-  if ( IsKeyDown ( KEY_DOWN ) ) {
+  if ( IsKeyDown ( KEY_DOWN ) || IsKeyDown ( KEY_S ) ) {
     Position.x -=
       cos ( ( Rotation - 90 ) * DEG2RAD ) * 5 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
     Position.y -=
       sin ( ( Rotation - 90 ) * DEG2RAD ) * 5 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
 
-    if ( IsKeyDown ( KEY_RIGHT ) ) {
+    if ( IsKeyDown ( KEY_RIGHT ) || IsKeyDown ( KEY_D ) ) {
       Rotation -= 4 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
       rotated = true;
     }
-    if ( IsKeyDown ( KEY_LEFT ) ) {
+    if ( IsKeyDown ( KEY_LEFT ) || IsKeyDown ( KEY_A ) ) {
       Rotation += 4 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
       rotated = true;
     }
   }
 
   if ( !rotated ) {
-    if ( IsKeyDown ( KEY_RIGHT ) ) {
+    if ( IsKeyDown ( KEY_RIGHT ) || IsKeyDown ( KEY_D ) ) {
       Rotation += 4 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
     }
-    if ( IsKeyDown ( KEY_LEFT ) ) {
+    if ( IsKeyDown ( KEY_LEFT ) || IsKeyDown ( KEY_A ) ) {
       Rotation -= 4 * DefaultParameters::GetInstance ( )->GetMultiplier ( );
     }
   }
@@ -114,15 +108,13 @@ void Player::Update ( std::vector<std::shared_ptr<NonPlayer>> & nps ) {
     Position.y = DefaultParameters::GetInstance ( )->GetRenderHeight ( ) - Radius / 2.;
 
   // trigger for projectile creation 
-  //
-  // if ( IsMouseButtonPressed ( MOUSE_BUTTON_LEFT ) || IsKeyPressed ( KEY_ENTER ) || IsKeyPressed ( KEY_SPACE ) ) {
-  //   nps.push_back ( std::make_shared<Projectile> ( Projectile ( { Position.x + Radius * cos ( ( Rotation - 90 ) * DEG2RAD ),
-  //                                                               Position.y + Radius * sin ( ( Rotation - 90 ) * DEG2RAD ) },
-  //                                                               this->Rotation,
-  //                                                               this->Sides,
-  //                                                               this->Radius,
-  //                                                               this->PlayerLevel * 2,
-  //                                                               LASER
-  //   ) ) );
-  // }
+
+  if ( IsKeyPressed ( KEY_SPACE ) ) {
+    nps.push_back ( std::make_shared<Projectile> ( Projectile ( 10,
+                                                                Position,
+                                                                Rotation,
+                                                                Radius ) ) );
+    nps.back ( )->Draw ( );
+  }
+
 }
