@@ -39,7 +39,7 @@ Acest repo conține codul sursă pentru jocul Project Asteroid, ce are la bază 
   - [x] apelarea constructorului din clasa de bază din constructori din derivate
   - [ ] clasă cu atribut de tip pointer la o clasă de bază cu derivate; aici apelați funcțiile virtuale prin pointer de bază, eventual prin interfața non-virtuală din bază
     - [ ] suprascris cc/op= pentru copieri/atribuiri corecte, copy and swap
-    - [ ] `dynamic_cast`/`std::dynamic_pointer_cast` pentru downcast cu sens
+    - [x] `dynamic_cast`/`std::dynamic_pointer_cast` pentru downcast cu sens
     - [x] smart pointers (recomandat, opțional)
 - [x] excepții
   - [x] ierarhie proprie cu baza `std::exception` sau derivată din `std::exception`; minim **3** clase pentru erori specifice
@@ -54,10 +54,10 @@ Acest repo conține codul sursă pentru jocul Project Asteroid, ce are la bază 
 ## Milestone #3
 
 #### Cerințe
-- [ ] 2 șabloane de proiectare (design patterns)
+- [x] 2 șabloane de proiectare (design patterns)
 - [ ] o clasă șablon cu sens; minim **2 instanțieri**
-  - [ ] preferabil și o funcție șablon (template) cu sens; minim 2 instanțieri
-- [ ] tag de `git`: de exemplu `v0.3` sau `v1.0`
+  - [x] preferabil și o funcție șablon (template) cu sens; minim 2 instanțieri
+- [x] tag de `git`: de exemplu `v0.3` sau `v1.0`
 
 ## Resurse
 - adăugați trimiteri către resursele externe care v-au ajutat sau pe care le-ați folosit

@@ -18,7 +18,7 @@ public:
     , Rotation ( new_rotation )
     , Sides ( new_sides ) {
     EntityID++;
-    std::cout << EntityID << '\n';
+    // std::cout << EntityID << '\n';
   }
 
   virtual Vector2 GetPos ( )const = 0;

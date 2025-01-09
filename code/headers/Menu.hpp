@@ -27,7 +27,6 @@ public:
   void RunApp (const std::shared_ptr<Player> & ,
                 std::vector<std::shared_ptr<Entity>> &);
 
-
   ///@brief Change the state of the menu based on inputs.
   void UpdateState ( char );
 

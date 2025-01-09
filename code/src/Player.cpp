@@ -2,10 +2,13 @@
 #include "../headers/DefaultParameters.hpp"
 #include "../headers/CollisionBox.hpp"
 #include "../headers/Entity.hpp"
-#include <stdlib.h>
 #include <string>
 #include <cmath>
 #include <memory>
+
+#include "../headers/EntityManager.hpp"
+
+
 
 Player::Player ( const std::string & new_player_name
                  , short new_player_level
@@ -28,10 +31,21 @@ Player::Player ( const Player & other )
   , CollisionBox ( other.Radius ) { }
 
 
+
+
+/// <summary>
+/// Returns the position of the Player object as a Vector2 struct variable.
+/// </summary>
+/// <returns>this->Position</returns>
 Vector2 Player::GetPos ( )const { return this->Position; }
+
+
 
 int Player::GetRotation ( )const { return this->Rotation; }
 
+/// <summary>
+/// Draws the player sprite.
+/// </summary>
 void Player::Draw ( )const {
   if ( this->Sides == 3 ) {
     DrawPolyLinesEx ( this->Position,
@@ -50,8 +64,13 @@ void Player::Draw ( )const {
   }
 }
 
-/// @brief Updates the position and rotation of the player.
 
+
+
+/// <summary>
+/// Updates the player's position and rotation and creates new projectiles if the player fires.
+/// </summary>
+/// <param name="nps"></param>
 void Player::Update ( std::vector<std::shared_ptr<Entity>> & nps ) {
 
   bool rotated = false;
@@ -109,12 +128,15 @@ void Player::Update ( std::vector<std::shared_ptr<Entity>> & nps ) {
 
   // trigger for projectile creation 
 
-  if ( IsKeyPressed ( KEY_SPACE ) ) {
-    nps.push_back ( std::make_shared<Projectile> ( Projectile ( 10,
-                                                                Position,
-                                                                Rotation,
-                                                                Radius ) ) );
+  const std::shared_ptr<EntityFactory> Factory = std::make_unique<ProjectileFactory> ( ProjectileFactory ( ) );
+
+  if ( IsKeyPressed ( KEY_SPACE ) || IsMouseButtonPressed ( MOUSE_BUTTON_LEFT ) ) {
+    nps.push_back ( Factory->Create ( 1,
+                                      this->Position,
+                                      this->Rotation,
+                                      this->Radius / 2,
+                                      1 ) );
+
     nps.back ( )->Draw ( );
   }
-
 }

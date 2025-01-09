@@ -7,7 +7,7 @@ void Projectile::Draw() const {
   DrawLineEx ( Position,
                { Position.x + cos ( ( Rotation - 90 ) * DEG2RAD ) * DefaultParameters::GetInstance ( )->GetRenderWidth ( ) / 30,
                  Position.y + sin ( ( Rotation - 90 ) * DEG2RAD ) * DefaultParameters::GetInstance ( )->GetRenderWidth ( ) / 30 },
-               3,
+               5,
                WHITE );
 
 }

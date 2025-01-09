@@ -17,7 +17,12 @@ public:
   ~Enemy ( ) override = default;
   Enemy ( ) = default;
 
-  Enemy ( Vector2, int, int, float , int, int);
+  Enemy ( Vector2 new_position,
+          int new_rotation,
+          int new_sides,
+          float new_radius,
+          int new_enemy_level,
+          int new_enemy_health_points);
   void Draw()const override;
   void Update ( ) override;
 

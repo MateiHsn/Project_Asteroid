@@ -64,6 +64,8 @@ add_executable(${PROJECT_NAME}
     code/headers/InvalidMultiplierException.hpp
     code/src/InvalidMultiplierException.cpp
     code/headers/EntityManager.hpp
+    code/src/EntityManager.cpp
+    code/src/TemplateFunction.cpp
 )
 
 include(cmake/CompilerFlags.cmake)

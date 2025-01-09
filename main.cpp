@@ -1,13 +1,16 @@
 #include <iostream>
 #include <memory>
-#include <vcruntime.h>
 #include <vector>
 
 #include "code/headers/Exceptions.hpp"
 #include "code/headers/Player.hpp"
+#include "code/headers/Projectile.hpp"
+#include "code/headers/Enemy.hpp"
 #include "code/headers/Entity.hpp"
 #include "code/headers/DefaultParameters.hpp"
 #include "code/headers/Menu.hpp"
+#include "code/headers/EntityManager.hpp"
+#include "code/src/TemplateFunction.cpp"
 
 int Entity::EntityID = 0;
 
