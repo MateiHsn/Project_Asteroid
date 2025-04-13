@@ -29,7 +29,7 @@ Acest repo conține codul sursă pentru jocul Project Asteroid, ce are la bază 
 
 #### Cerințe
 - [x] separarea codului din clase în `.h` (sau `.hpp`) și `.cpp`
-- [ ] moșteniri:
+- [x] moșteniri:
   - minim o clasă de bază și **3 clase derivate** din aceeași ierarhie
   - ierarhia trebuie să fie cu bază proprie, nu derivată dintr-o clasă predefinită
   - [x] funcții virtuale (pure) apelate prin pointeri de bază din clasa care conține atributul de tip pointer de bază
@@ -37,7 +37,7 @@ Acest repo conține codul sursă pentru jocul Project Asteroid, ce are la bază 
     - constructori virtuali (clone): sunt necesari, dar nu se consideră funcții specifice temei
     - afișare virtuală, interfață non-virtuală
   - [x] apelarea constructorului din clasa de bază din constructori din derivate
-  - [ ] clasă cu atribut de tip pointer la o clasă de bază cu derivate; aici apelați funcțiile virtuale prin pointer de bază, eventual prin interfața non-virtuală din bază
+  - [x] clasă cu atribut de tip pointer la o clasă de bază cu derivate; aici apelați funcțiile virtuale prin pointer de bază, eventual prin interfața non-virtuală din bază
     - [ ] suprascris cc/op= pentru copieri/atribuiri corecte, copy and swap
     - [x] `dynamic_cast`/`std::dynamic_pointer_cast` pentru downcast cu sens
     - [x] smart pointers (recomandat, opțional)
